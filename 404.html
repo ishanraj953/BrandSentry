@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Not found — BrandSentra</title>
+<link rel="icon" id="fav" href="favicon.svg" type="image/svg+xml">
+<style>
+body{margin:0;min-height:100vh;display:grid;place-items:center;font-family:'Manrope','Outfit',-apple-system,Segoe UI,sans-serif;background:#170f24;color:#f5efff;text-align:center;padding:24px}
+h1{font-size:3rem;margin:0 0 8px;letter-spacing:-.03em;color:#b6a4ff}
+p{color:#d4c6fa;margin:0 0 22px}
+a{display:inline-block;margin:4px;padding:12px 20px;border-radius:10px;background:linear-gradient(135deg,#6e56cf,#9a83e8);color:#fff;font-weight:700;text-decoration:none;box-shadow:0 8px 24px rgba(110,86,207,0.35)}
+a.ghost{background:#211832;border:1px solid #3d2866;color:#f5efff;box-shadow:none}
+a:hover{transform:translateY(-1px)}
+</style>
+</head>
+<body>
+<div>
+  <h1>404</h1>
+  <p>That page is not part of BrandSentra.</p>
+  <a id="home" href="./">Home</a>
+  <a class="ghost" id="console" href="./demo/">Analyst Console</a>
+</div>
+<script>
+  var base = "./";
+  document.getElementById("home").href = base;
+  document.getElementById("console").href = base + "demo/";
+  document.getElementById("fav").href = base + "favicon.svg";
+</script>
+</body>
+</html>

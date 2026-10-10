@@ -1,0 +1,28 @@
+# BrandSentra Code Owners
+# These owners will be automatically requested for review on PRs
+
+# Global owners
+* @BrandSentra
+
+# Core detection engine
+/src/core/ @BrandSentra
+
+# API and authentication
+/src/api/ @BrandSentra
+
+# Notification system
+/src/notifications/ @BrandSentra
+
+# Configuration and infrastructure
+/src/config/ @BrandSentra
+/Dockerfile @BrandSentra
+/docker-compose.yml @BrandSentra
+/.github/ @BrandSentra
+
+# Documentation
+/docs/ @BrandSentra
+README.md @BrandSentra
+
+# Security-sensitive files
+/src/api/auth.py @BrandSentra
+SECURITY.md @BrandSentra

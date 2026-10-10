@@ -1,0 +1,162 @@
+# BrandSentra Configuration
+# Digital Risk Protection & Brand Intelligence Suite v2.5.0
+#
+# Resolution order: --config PATH > $KCW_CONFIG > config.local.yaml > config.yaml
+# Copy this file to config.local.yaml (git-ignored) for secrets, or use the
+# KCW_* environment variables listed at the bottom.
+
+certstream:
+  source: ctlogs               # ctlogs = read Certificate Transparency logs directly (no third-party
+                               # service); certstream = legacy CertStream WebSocket (url below)
+  url: "wss://certstream.calidog.io/"
+  ct_logs: []                  # explicit RFC 6962 log URLs; empty = Google log list + built-in shards
+  ct_batch_size: 256
+  ct_poll_interval: 2.0
+  ct_max_lag: 5000
+  keywords:                    # keywords shorter than min_keyword_length match whole tokens only
+    - brandsentra
+    - novapay
+    - n0vapay
+    - kestrel
+    - kestrelmart
+    - halcyon
+    - halcyonhealth
+    - meridianbank
+    - apexcloud
+    - luminatelecom
+    - vertexsec
+    - horizonlogistics
+    - secure-login
+    - auth-portal
+    - verify-identity
+    - account-update
+    - payment-gateway
+    - support-desk
+  retry_delay: 5
+  max_delay: 300
+  log_file: "data/certstream_domains.log"
+  heartbeat_interval: 100      # persist monitor stats every N certificates
+  persist_events: true         # store matched certificates in the database
+  ignore_wildcards: false
+  min_keyword_length: 3
+
+domain_analysis:
+  homoglyph_threshold: 0.85
+  levenshtein_threshold: 3     # hard cap; the effective threshold scales with brand length
+  entropy_threshold: 3.5
+  enable_whois: true
+  enable_dns: true
+  allowlist: []                # domains (and their subdomains) that are never reported
+  max_permutations: 2000
+  protected_brands:
+    - novapay.com
+    - kestrelmart.com
+    - halcyonhealth.org
+    - meridianbank.com
+    - apexcloud.io
+    - luminatelecom.com
+    - vertexsecurity.com
+    - horizonlogistics.com
+
+# Extra brand profiles merged with built-in profiles.
+# Set brands_replace_defaults: true to monitor only the brands listed here.
+brands: []
+#  - name: "NovaPay"
+#    short_name: "NovaPay"
+#    domains: ["novapay.com"]
+#    keywords: ["novapay", "nova pay"]
+#    aliases: ["n0vapay"]
+#    arabic_keywords: ["نوفاباي"]
+#    industry: payments
+#    priority: critical
+brands_replace_defaults: false
+
+squat_watcher:
+  enabled: true
+  interval_seconds: 21600      # 6 hours
+  tlds: [com, net, org, co, info, biz, me, io, app, xyz, top, online, site, icu, club, live, shop, cc, link, click]
+  brands: []                   # empty = all protected brands
+  include_combos: true
+  max_workers: 32
+  dns_timeout: 3.0
+  max_candidates_per_brand: 1500
+  notify_severity: high
+
+api:
+  host: "0.0.0.0"
+  port: 5000
+  debug: false
+  secret_key: "change-me-in-production"   # signs bearer tokens (KCW_API_SECRET)
+  api_key: ""                             # optional static key for integrations (X-API-Key)
+  auth_required: false                    # true = every endpoint needs a token / API key
+  admin_password: "admin"                 # KCW_ADMIN_PASSWORD
+  analyst_password: "analyst"             # KCW_ANALYST_PASSWORD
+  token_ttl_seconds: 28800
+  rate_limit: "100/hour"                  # per client IP, "" to disable
+  max_bulk_domains: 100
+  enable_metrics: true                    # Prometheus endpoint at /metrics
+  trust_proxy: false                      # honour X-Forwarded-For for rate limiting
+  cors_origins:
+    - "*"
+
+notifications:
+  min_severity: medium         # critical | high | medium | low
+  cooldown_seconds: 3600       # suppress repeat alerts for the same domain + type
+
+  email_enabled: false
+  email_smtp_server: ""
+  email_smtp_port: 587
+  email_username: ""
+  email_password: ""
+  email_recipients: []
+
+  slack_enabled: false
+  slack_webhook_url: ""
+  slack_channel: "#phishing-alerts"
+
+  teams_enabled: false
+  teams_webhook_url: ""
+
+  telegram_enabled: false
+  telegram_bot_token: ""
+  telegram_chat_id: ""
+
+  webhook_enabled: false
+  webhook_url: ""
+  webhook_secret: ""           # HMAC-SHA256 signature in X-KCW-Signature
+
+  syslog_enabled: false        # CEF over syslog for SIEM ingestion
+  syslog_host: "127.0.0.1"
+  syslog_port: 514
+  syslog_protocol: udp         # udp | tcp
+  syslog_facility: 16          # local0
+
+threat_intel:
+  virustotal_api_key: ""
+  urlscan_api_key: ""
+  shodan_api_key: ""
+  abuseipdb_api_key: ""
+  phishtank_api_key: ""
+  google_safebrowsing_key: ""
+  openphish_enabled: true      # free feed, no key required
+  urlhaus_enabled: true        # free abuse.ch API, no key required
+  cache_ttl_seconds: 3600
+  feed_refresh_seconds: 3600
+  request_timeout: 10
+  cache_dir: "data/intel_cache"
+
+database:
+  db_type: sqlite
+  db_path: "data/brandsentra.db"
+  retention_days: 0            # 0 = keep everything
+
+log_level: INFO
+data_dir: data
+
+# Environment variable overrides (take precedence over this file):
+#   KCW_CONFIG, KCW_API_SECRET, KCW_API_KEY, KCW_API_HOST, KCW_API_PORT, KCW_AUTH_REQUIRED,
+#   KCW_ADMIN_PASSWORD, KCW_ANALYST_PASSWORD, KCW_RATE_LIMIT, KCW_DB_PATH, KCW_LOG_LEVEL,
+#   KCW_DATA_DIR, KCW_CERTSTREAM_URL, KCW_MIN_SEVERITY,
+#   KCW_VT_API_KEY, KCW_URLSCAN_KEY, KCW_GSB_KEY, KCW_PHISHTANK_KEY, KCW_SHODAN_KEY, KCW_ABUSEIPDB_KEY,
+#   KCW_SLACK_WEBHOOK, KCW_TEAMS_WEBHOOK, KCW_TELEGRAM_TOKEN, KCW_TELEGRAM_CHAT,
+#   KCW_WEBHOOK_URL, KCW_WEBHOOK_SECRET, KCW_SMTP_PASSWORD

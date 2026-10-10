@@ -1,0 +1,56 @@
+name: CT relay feed
+
+# Tails public Certificate Transparency logs with the project's own tailer and
+# publishes the _ matches to demo/feed/ so the GitHub Pages console can load
+# them from its own origin. Runs for ~25 minutes every 30 minutes.
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+    inputs:
+      seconds:
+        description: "How long to tail the logs"
+        default: "1500"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ct-relay
+  cancel-in-progress: false
+
+jobs:
+  relay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 32
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install runtime dependencies
+        run: pip install -r requirements.txt
+
+      - name: Tail CT logs and build the relay feed
+        run: python scripts/ct_snapshot.py --seconds "${{ github.event.inputs.seconds || '1500' }}" --out demo/feed
+
+      - name: Publish
+        run: |
+          git config user.name "BrandSentra Bot"
+          git config user.email "bot@brandsentra.com"
+          git add demo/feed
+          if git diff --cached --quiet; then
+            echo "no new matches"
+            exit 0
+          fi
+          git commit -m "chore(feed): CT relay snapshot $(date -u +'%Y-%m-%dT%H:%MZ') [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push origin HEAD:main && exit 0
+            sleep 10
+          done
+          exit 1

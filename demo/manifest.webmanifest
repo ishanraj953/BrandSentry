@@ -1,0 +1,16 @@
+{
+  "name": "BrandSentra — Digital Risk Protection",
+  "short_name": "BrandSentra",
+  "description": "Live Certificate Transparency monitoring, typosquat hunting and brand-impersonation alerts, running entirely in your browser.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#170f24",
+  "theme_color": "#170f24",
+  "lang": "en",
+  "categories": ["security", "utilities"],
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "icon-maskable.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}

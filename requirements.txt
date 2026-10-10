@@ -1,0 +1,39 @@
+# BrandSentra v2.5.0 - Dependencies
+
+# Core
+certstream>=1.0.9        # optional legacy source for `main.py monitor --source certstream`
+flask>=3.0.0
+flask-cors>=4.0.0
+pyyaml>=6.0
+requests>=2.31.0
+
+# DNS & WHOIS
+dnspython>=2.4.0
+python-whois>=0.9.4
+
+# Async support
+aiohttp>=3.9.0
+
+# Database
+# SQLite3 is built-in
+
+# Security
+cryptography>=42.0.0
+
+# Testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-asyncio>=0.23.0
+
+# Code quality
+flake8>=7.0.0
+black>=24.0.0
+mypy>=1.8.0
+
+# Optional: ML-based detection
+# scikit-learn>=1.4.0
+# numpy>=1.26.0
+
+# Optional: Screenshot capture
+# selenium>=4.17.0
+# Pillow>=10.2.0
