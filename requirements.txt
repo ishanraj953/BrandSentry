@@ -3,7 +3,7 @@
 # Core
 certstream>=1.0.9        # optional legacy source for `main.py monitor --source certstream`
 flask>=3.0.0
-flask-cors>=4.0.0
+flask-cors>=6.0.5
 pyyaml>=6.0
 requests>=2.31.0
 gunicorn>=21.2.0
