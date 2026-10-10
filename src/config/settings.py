@@ -271,6 +271,7 @@ ENV_MAP: Dict[str, tuple] = {
     "KCW_API_KEY": ("api", "api_key"),
     "KCW_API_HOST": ("api", "host"),
     "KCW_API_PORT": ("api", "port"),
+    "PORT": ("api", "port"),
     "KCW_RATE_LIMIT": ("api", "rate_limit"),
     "KCW_AUTH_REQUIRED": ("api", "auth_required"),
     "KCW_ADMIN_PASSWORD": ("api", "admin_password"),

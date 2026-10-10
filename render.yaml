@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: brandsentry
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn "src.api.app:get_app()" --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.6
+      - key: KCW_API_HOST
+        value: 0.0.0.0
+      - key: KCW_API_SECRET
+        generateValue: true
+      - key: KCW_ADMIN_PASSWORD
+        value: admin123
+      - key: KCW_ANALYST_PASSWORD
+        value: analyst123

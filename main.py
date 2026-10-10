@@ -22,6 +22,7 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import os
 import sys
 from typing import Any, Dict, List, Optional
 
@@ -150,6 +151,11 @@ def cmd_api(config: Settings, args: argparse.Namespace) -> int:
         config.api.host = args.host
     if args.port:
         config.api.port = args.port
+    elif "PORT" in os.environ:
+        try:
+            config.api.port = int(os.environ["PORT"])
+        except ValueError:
+            pass
     if args.debug or args.command == "demo":
         config.api.debug = True
     app = create_app(config)
