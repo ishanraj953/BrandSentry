@@ -27,7 +27,7 @@ pytest-asyncio>=0.23.0
 
 # Code quality
 flake8>=7.0.0
-black>=24.0.0
+black>=26.10.0
 mypy>=1.8.0
 
 # Optional: ML-based detection
