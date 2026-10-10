@@ -307,7 +307,7 @@
   // ------------------------------------------------------------------ //
   const svg = (d, extra) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}${extra || ""}</svg>`;
   const ICONS = {
-    shield: svg('<path d="M12 2.5 4.5 5.6v6.2c0 4.7 3.2 9 7.5 10.2 4.3-1.2 7.5-5.5 7.5-10.2V5.6z"/><path d="m9 12 2 2 4-4"/>'),
+    shield: '<svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect width="32" height="32" rx="8" fill="currentColor"/><circle cx="16" cy="16" r="11.5" fill="none" stroke="#f3efff" stroke-opacity=".35" stroke-width=".6" stroke-dasharray="1 1.4"/><path d="M16 6.5 24 10.2v5.2c0 5-3.4 8.1-8 9.3-4.6-1.2-8-4.3-8-9.3v-5.2z" fill="none" stroke="#f3efff" stroke-width="1.7"/><path d="M12.2 15.8 15 18.6l5-5.8" fill="none" stroke="#f2cb55" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     menu: svg('<path d="M4 7h16M4 12h16M4 17h16"/>'),
     close: svg('<path d="M6 6l12 12M18 6 6 18"/>'),
     sun: svg('<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>'),
@@ -343,7 +343,7 @@
     if (persist) { try { localStorage.setItem("kcw_theme", theme); } catch (e) { /* ignore */ } }
     document.querySelectorAll('[data-icon="theme"]').forEach((el) => { el.innerHTML = ICONS[theme === "light" ? "moon" : "sun"]; el.title = theme === "light" ? "Switch to dark theme" : "Switch to light theme"; });
     const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.content = theme === "light" ? "#eef2f8" : "#060a14";
+    if (meta) meta.content = theme === "light" ? "#f8f5fe" : "#0d0818";
   }
   function toggleTheme() { applyTheme(currentTheme() === "light" ? "dark" : "light", true); }
   function initTheme() {

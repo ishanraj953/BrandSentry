@@ -115,7 +115,9 @@ class CertStreamMonitor:
     def match_keywords(self, domain: str) -> List[str]:
         """Keywords that match ``domain`` (token match for short keywords)."""
         lowered = domain.lower()
-        tokens = set(t for t in _TOKEN_SPLIT.split(lowered) if t)
+        parsed = parse_domain(lowered)
+        target = f"{parsed.subdomain}.{parsed.label}".strip(".") if parsed.label else lowered
+        tokens = set(t for t in _TOKEN_SPLIT.split(target) if t)
         hits: List[str] = []
         for kw in self.keywords:
             if len(kw) < self.min_keyword_length:
@@ -128,7 +130,7 @@ class CertStreamMonitor:
                     (t.startswith(kw) or t.endswith(kw)) and len(t) <= len(kw) + 8 for t in tokens
                 ):
                     hits.append(kw)
-            elif kw in lowered:
+            elif kw in target:
                 hits.append(kw)
         return hits
 
