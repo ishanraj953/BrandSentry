@@ -239,7 +239,7 @@ void main(){ float i = pow(0.62 - dot(vN, vV), 3.2); gl_FragColor = vec4(uColor,
     const edges = new THREE.EdgesGeometry(ico);
     const shieldMat = new THREE.LineBasicMaterial({ color: LAVENDER, transparent: true, opacity: 0.18, depthWrite: false });
     const shieldMesh = new THREE.LineSegments(edges, shieldMat);
-    rootGroup.add(shieldMesh);
+    // rootGroup.add(shieldMesh);
 
     // Controls state
     let isPaused = false;
@@ -393,7 +393,7 @@ void main(){ float i = pow(0.62 - dot(vN, vV), 3.2); gl_FragColor = vec4(uColor,
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
         </button>
         <button id="earthDemoBtn" class="earth-c-btn" style="height:32px;padding:0 12px;border-radius:99px;border:none;background:var(--cyan-glow);color:var(--cyan);font-weight:700;font-size:0.75rem;cursor:pointer;display:flex;align-items:center;gap:6px;" title="Demonstrate how protection works">
-          ✨ Protection Walkthrough
+           Protection Walkthrough
         </button>
       </div>
       <div id="earthCaptionCard" style="display:none;position:absolute;left:16px;top:16px;max-width:280px;padding:14px;border-radius:12px;background:rgba(23,15,36,0.92);border:1px solid var(--border);backdrop-filter:blur(12px);color:var(--text);z-index:20;box-shadow:var(--shadow);">
@@ -427,7 +427,7 @@ void main(){ float i = pow(0.62 - dot(vN, vV), 3.2); gl_FragColor = vec4(uColor,
 
     if (step === 0) {
       card.style.display = 'none';
-      if (demoBtn) demoBtn.innerHTML = '✨ Protection Walkthrough';
+      if (demoBtn) demoBtn.innerHTML = ' Protection Walkthrough';
       return;
     }
 
@@ -436,7 +436,7 @@ void main(){ float i = pow(0.62 - dot(vN, vV), 3.2); gl_FragColor = vec4(uColor,
     document.getElementById('earthStepBadge').textContent = `Step ${step} of ${DEMO_STEPS.length}`;
     document.getElementById('earthStepTitle').textContent = s.title;
     document.getElementById('earthStepBody').textContent = s.body;
-    if (demoBtn) demoBtn.innerHTML = `Next: Step ${step === 4 ? 1 : step + 1} ➔`;
+    if (demoBtn) demoBtn.innerHTML = `Next: Step ${step === 4 ? 1 : step + 1} ->`;
   }
 
   window.initBrandSentraEarth = initEarth;

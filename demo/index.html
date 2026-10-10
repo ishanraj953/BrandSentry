@@ -486,7 +486,7 @@ td{padding:11px 12px}
 .toast{border-radius:10px;padding:13px 18px 13px 16px;display:flex;align-items:center;gap:10px;font-weight:500;border-left-width:4px;visibility:hidden;opacity:0;transform:translateY(200%);transition:transform .25s cubic-bezier(.4,0,.2,1),opacity .2s,visibility 0s .25s}
 .toast.show{visibility:visible;opacity:1;transform:none;transition:transform .25s cubic-bezier(.4,0,.2,1),opacity .2s,visibility 0s}
 .toast::before{content:'i';width:20px;height:20px;border-radius:50%;background:var(--cyan);color:#041018;font-weight:800;font-size:.72rem;display:grid;place-items:center;flex-shrink:0;font-family:var(--font-mono)}
-.toast.ok::before{content:'✓';background:var(--green)}
+.toast.ok::before{content:'[OK]';background:var(--green)}
 .toast.crit::before{content:'!';background:var(--red);color:#fff}
 .perm-card{border-radius:8px;transition:transform .15s,border-color .15s}
 .perm-card:hover{transform:translateY(-1px);border-color:var(--cyan-dim)}
@@ -609,7 +609,7 @@ tr.selected td{background:var(--cyan-glow)!important}
 .hero-cta-btn:hover{transform:translateY(-1px);box-shadow:0 12px 28px var(--cyan-glow);color:#fff}
 .hero-sec-btn{padding:12px 20px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg-card);color:var(--text);font-family:var(--font-display);font-weight:600;font-size:.88rem;display:inline-flex;align-items:center;gap:8px;transition:all .15s;text-decoration:none}
 .hero-sec-btn:hover{border-color:var(--cyan);color:var(--cyan)}
-.earth-container{position:relative;width:100%;height:520px;min-height:460px;display:flex;align-items:center;justify-content:center;border-radius:var(--radius-lg);overflow:hidden;background:radial-gradient(circle at center,rgba(182,164,255,0.08) 0%,transparent 70%);border:1px solid var(--border-soft)}
+.earth-container{position:relative;width:100%;height:520px;min-height:460px;display:flex;align-items:center;justify-content:center;border:none;background:transparent;box-shadow:none;overflow:visible}
 @media(max-width:900px){.earth-container{height:380px;min-height:340px}}
 .earth-note{text-align:center;font-size:.72rem;color:var(--text-muted);margin-top:10px}
 
@@ -729,6 +729,69 @@ tr.selected td{background:var(--cyan-glow)!important}
 .faq-item.open .faq-q-ico{transform:rotate(45deg)}
 .faq-q-ico{transition:transform .2s;font-size:1.1rem;color:var(--cyan)}
 .sentra-ai-box{border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;background:linear-gradient(135deg,rgba(110,86,207,0.1),rgba(154,131,232,0.05)),var(--bg-card);box-shadow:var(--shadow)}
+
+/* ── Framer Motion Animations & Modal ── */
+@keyframes framerSpringIn {
+  0% { opacity: 0; transform: scale(0.94) translateY(24px); }
+  60% { opacity: 1; transform: scale(1.01) translateY(-2px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes framerFadeIn {
+  from { opacity: 0; backdrop-filter: blur(0px); }
+  to { opacity: 1; backdrop-filter: blur(16px); }
+}
+@keyframes framerSlideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.framer-modal-overlay {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(13, 8, 24, 0.85);
+  backdrop-filter: blur(16px);
+  display: none; align-items: center; justify-content: center;
+  padding: 24px;
+}
+.framer-modal-overlay.open {
+  display: flex;
+  animation: framerFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.framer-modal-content {
+  width: 100%; max-width: 960px; max-height: 88vh;
+  background: #1c122c; border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px; box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+  display: flex; flex-direction: column; overflow: hidden;
+  animation: framerSpringIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.framer-modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: #140d20;
+}
+.framer-modal-nav {
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: #170f24; overflow-x: auto;
+}
+.framer-nav-tab {
+  padding: 8px 16px; border-radius: 99px;
+  border: 1px solid transparent; background: transparent;
+  color: rgba(255, 255, 255, 0.6); font-size: 0.82rem; font-weight: 600;
+  cursor: pointer; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+.framer-nav-tab:hover { color: #fff; background: rgba(255, 255, 255, 0.05); }
+.framer-nav-tab.active {
+  background: rgba(170, 149, 249, 0.15);
+  border-color: rgba(170, 149, 249, 0.4);
+  color: #aa95f9; font-weight: 700;
+  box-shadow: 0 4px 12px rgba(170, 149, 249, 0.15);
+}
+.framer-tab-body {
+  padding: 28px; overflow-y: auto; flex: 1;
+  animation: framerSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 </style>
 </head>
 <body>
@@ -739,16 +802,16 @@ tr.selected td{background:var(--cyan-glow)!important}
   <header class="landing-nav">
     <div class="brand"><span class="logo" data-icon="shield"></span>Brand<span>Sentra</span></div>
     <nav class="landing-nav-links">
-      <a href="#capabilities">Capabilities</a>
-      <a href="#how">How It Works</a>
-      <a href="#experience">Protection Experience</a>
-      <a href="#roi">ROI Estimator</a>
-      <a href="#solutions">Industry Solutions</a>
-      <a href="#faq">Knowledge Base</a>
+      <a href="#capabilities" onclick="openNavModal('capabilities'); return false;">Capabilities</a>
+      <a href="#how" onclick="openNavModal('how'); return false;">How It Works</a>
+      <a href="#experience" onclick="openNavModal('experience'); return false;">Protection Experience</a>
+      <a href="#roi" onclick="openNavModal('roi'); return false;">ROI Estimator</a>
+      <a href="#solutions" onclick="openNavModal('solutions'); return false;">Industry Solutions</a>
+      <a href="#faq" onclick="openNavModal('faq'); return false;">Knowledge Base</a>
     </nav>
     <div class="landing-nav-right">
       <button class="icon-btn theme-btn" onclick="toggleTheme()" title="Toggle light / dark" aria-label="Toggle theme" data-icon="theme"></button>
-      <button class="hero-cta-btn" style="padding:7px 14px;font-size:0.78rem" onclick="document.getElementById('analystCard').scrollIntoView({behavior:'smooth'});document.getElementById('analystName').focus();">Open Console ↵</button>
+      <button class="hero-cta-btn" style="padding:7px 14px;font-size:0.78rem" onclick="enterDashboard()">Open Console -></button>
     </div>
   </header>
 
@@ -760,7 +823,7 @@ tr.selected td{background:var(--cyan-glow)!important}
       <p class="lede">BrandSentra helps organizations identify potential impersonation across social media, domain registries, and mobile applications, investigate emerging risks, and make informed protection decisions.</p>
       
       <div class="hero-cta-group">
-        <button class="hero-cta-btn" onclick="document.getElementById('analystCard').scrollIntoView({behavior:'smooth'});document.getElementById('analystName').focus();">
+        <button class="hero-cta-btn" onclick="enterDashboard()">
           Protect Your Organization
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>
@@ -768,7 +831,7 @@ tr.selected td{background:var(--cyan-glow)!important}
       </div>
       <div style="margin-bottom:24px">
         <a href="#action" style="font-size:0.8rem;color:var(--text-dim);display:inline-flex;align-items:center;gap:6px">
-          <span style="color:var(--red)">🛡️</span> Found something suspicious? Report it.
+          <span style="color:var(--red)">️</span> Found something suspicious? Report it.
         </a>
       </div>
 
@@ -825,9 +888,9 @@ tr.selected td{background:var(--cyan-glow)!important}
         <span class="live-dot"></span> NETWORK DEFENSE: LIVE
       </div>
       <div class="telemetry-items">
-        <span>⚡ 24h CT Logs Ingested: <strong id="liveCertsCount">1,420,500</strong></span>
-        <span>🛡️ Avg DMCA Takedown Speed: <strong>4.2 Hours</strong></span>
-        <span>🌐 Active Crawler Nodes: <strong>32 Workers</strong></span>
+        <span> 24h CT Logs Ingested: <strong id="liveCertsCount">1,420,500</strong></span>
+        <span>️ Avg DMCA Takedown Speed: <strong>4.2 Hours</strong></span>
+        <span> Active Crawler Nodes: <strong>32 Workers</strong></span>
       </div>
     </div>
   </div>
@@ -923,7 +986,7 @@ tr.selected td{background:var(--cyan-glow)!important}
                   <span id="laDiffFormatted"><span style="background:var(--ochre-wash);color:var(--yellow);padding:2px 4px;border-radius:4px">N0vaPay</span> <span style="background:var(--copper-wash);color:var(--red);padding:2px 4px;border-radius:4px">+Support</span></span>
                 </div>
                 <div class="la-tags" id="laTags">
-                  <span class="la-tag">Homoglyph Substitution: '0' ➔ 'o'</span>
+                  <span class="la-tag">Homoglyph Substitution: '0' -> 'o'</span>
                   <span class="la-tag">Keyword Append: '+Support'</span>
                   <span class="la-tag">Risk: Candidate For Investigation</span>
                 </div>
@@ -976,12 +1039,12 @@ tr.selected td{background:var(--cyan-glow)!important}
               <button class="act-btn" onclick="replayProtectSteps()" style="font-size:0.75rem;padding:4px 10px">↺ Replay</button>
             </div>
             <div class="protect-checklist" id="protectChecklist">
-              <div class="protect-step done" data-step="1"><div class="protect-check">✓</div><span>1. Preserve cryptographic snapshots of the profile, page, and destination</span></div>
-              <div class="protect-step done" data-step="2"><div class="protect-check">✓</div><span>2. Confirm asset is not an authorized partner or internal regional subsidiary</span></div>
-              <div class="protect-step done" data-step="3"><div class="protect-check">✓</div><span>3. Record analyst triage decision with immutable rationale and STIX 2.1 tags</span></div>
-              <div class="protect-step done" data-step="4"><div class="protect-check">✓</div><span>4. Generate standardized platform takedown filing and DMCA notice</span></div>
-              <div class="protect-step done" data-step="5"><div class="protect-check">✓</div><span>5. Register missing official regional handles to prevent future recurrence</span></div>
-              <div class="protect-step done" data-step="6"><div class="protect-check">✓</div><span>6. Publish Trust Passport identity baseline for partner validation</span></div>
+              <div class="protect-step done" data-step="1"><div class="protect-check">[OK]</div><span>1. Preserve cryptographic snapshots of the profile, page, and destination</span></div>
+              <div class="protect-step done" data-step="2"><div class="protect-check">[OK]</div><span>2. Confirm asset is not an authorized partner or internal regional subsidiary</span></div>
+              <div class="protect-step done" data-step="3"><div class="protect-check">[OK]</div><span>3. Record analyst triage decision with immutable rationale and STIX 2.1 tags</span></div>
+              <div class="protect-step done" data-step="4"><div class="protect-check">[OK]</div><span>4. Generate standardized platform takedown filing and DMCA notice</span></div>
+              <div class="protect-step done" data-step="5"><div class="protect-check">[OK]</div><span>5. Register missing official regional handles to prevent future recurrence</span></div>
+              <div class="protect-step done" data-step="6"><div class="protect-check">[OK]</div><span>6. Publish Trust Passport identity baseline for partner validation</span></div>
             </div>
             <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.75rem;color:var(--text-muted);margin-top:16px">
               <span>BrandSentra prepares and tracks. It never claims a removal until confirmed by the host platform.</span>
@@ -1137,7 +1200,7 @@ tr.selected td{background:var(--cyan-glow)!important}
 
       <div class="bento-grid">
         <div class="bento-card">
-          <span style="font-size:1.8rem;margin-bottom:8px">🏛️</span>
+          <span style="font-size:1.8rem;margin-bottom:8px">️</span>
           <h3>Financial Services &amp; Banking</h3>
           <p>Payments and banking brands face credential phishing, clone mobile wallets, and unauthorized VIP customer service bots.</p>
           <ul class="bento-threats">
@@ -1147,7 +1210,7 @@ tr.selected td{background:var(--cyan-glow)!important}
           </ul>
         </div>
         <div class="bento-card">
-          <span style="font-size:1.8rem;margin-bottom:8px">🛍️</span>
+          <span style="font-size:1.8rem;margin-bottom:8px">️</span>
           <h3>Retail &amp; E-Commerce</h3>
           <p>Seasonal marketing bursts create opportunities for clone storefronts, coupon scams, and counterfeit gift card offers.</p>
           <ul class="bento-threats">
@@ -1157,7 +1220,7 @@ tr.selected td{background:var(--cyan-glow)!important}
           </ul>
         </div>
         <div class="bento-card">
-          <span style="font-size:1.8rem;margin-bottom:8px">⚕️</span>
+          <span style="font-size:1.8rem;margin-bottom:8px">️</span>
           <h3>Healthcare &amp; Life Sciences</h3>
           <p>High sensitivity requires rigorous verification against counterfeit pharmacies and unauthorized patient appointment portals.</p>
           <ul class="bento-threats">
@@ -1167,7 +1230,7 @@ tr.selected td{background:var(--cyan-glow)!important}
           </ul>
         </div>
         <div class="bento-card">
-          <span style="font-size:1.8rem;margin-bottom:8px">💻</span>
+          <span style="font-size:1.8rem;margin-bottom:8px"></span>
           <h3>Technology &amp; SaaS</h3>
           <p>Developer audiences trust package names; package identifiers, documentation mirrors, and developer APIs require exact whitelisting.</p>
           <ul class="bento-threats">
@@ -1177,7 +1240,7 @@ tr.selected td{background:var(--cyan-glow)!important}
           </ul>
         </div>
         <div class="bento-card">
-          <span style="font-size:1.8rem;margin-bottom:8px">🎓</span>
+          <span style="font-size:1.8rem;margin-bottom:8px"></span>
           <h3>Education &amp; Universities</h3>
           <p>Academic institutions protect student admissions, financial aid portals, and campus alumni association identities.</p>
           <ul class="bento-threats">
@@ -1187,7 +1250,7 @@ tr.selected td{background:var(--cyan-glow)!important}
           </ul>
         </div>
         <div class="bento-card">
-          <span style="font-size:1.8rem;margin-bottom:8px">🚀</span>
+          <span style="font-size:1.8rem;margin-bottom:8px"></span>
           <h3>Startups &amp; Emerging Brands</h3>
           <p>Establish a defensive baseline before product launch to preempt handle squatting and lookalike domains after funding news.</p>
           <ul class="bento-threats">
@@ -1210,8 +1273,8 @@ tr.selected td{background:var(--cyan-glow)!important}
           <p style="font-size:0.86rem;color:var(--text-dim);line-height:1.6">Open the security console, establish your identity baseline, and start tailing Certificate Transparency and typosquats immediately.</p>
         </div>
         <div style="margin-top:24px">
-          <button class="hero-cta-btn" onclick="document.getElementById('analystCard').scrollIntoView({behavior:'smooth'});document.getElementById('analystName').focus();">
-            Start Console Setup ➔
+          <button class="hero-cta-btn" onclick="enterDashboard()">
+            Start Console Setup ->
           </button>
         </div>
       </div>
@@ -1224,7 +1287,7 @@ tr.selected td{background:var(--cyan-glow)!important}
         </div>
         <div style="margin-top:24px">
           <button class="hero-sec-btn" onclick="quickScan('novapay-security-verify.com')">
-            🔍 Analyze Suspicious Domain
+             Analyze Suspicious Domain
           </button>
         </div>
       </div>
@@ -1282,7 +1345,7 @@ tr.selected td{background:var(--cyan-glow)!important}
         <!-- SentraAI Interactive Assistant -->
         <div class="sentra-ai-box">
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-            <span style="font-size:1.3rem">✨</span>
+            <span style="font-size:1.3rem"></span>
             <div>
               <h4 style="font-size:1rem;font-weight:800">Ask SentraAI Instant Query</h4>
               <p style="font-size:0.72rem;color:var(--text-dim)">Real-time architecture &amp; methodology assistant</p>
@@ -1291,9 +1354,9 @@ tr.selected td{background:var(--cyan-glow)!important}
           <input type="text" id="sentraAiInput" class="form-group input" style="width:100%;padding:10px 14px;background:var(--bg-deep);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:0.85rem;margin-bottom:10px" placeholder="Ask about confusables, takedowns, baseline…" onkeydown="if(event.key==='Enter')askSentraAi()">
           
           <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px">
-            <button class="act-btn" onclick="askSentraAi('How does confusable character detection work?')">🔤 Confusables</button>
-            <button class="act-btn" onclick="askSentraAi('What happens when a takedown is ignored by a registrar?')">⚖️ Registrar Takedowns</button>
-            <button class="act-btn" onclick="askSentraAi('How do you prevent false positives on regional brand handles?')">🛡️ Regional Handles</button>
+            <button class="act-btn" onclick="askSentraAi('How does confusable character detection work?')"> Confusables</button>
+            <button class="act-btn" onclick="askSentraAi('What happens when a takedown is ignored by a registrar?')">️ Registrar Takedowns</button>
+            <button class="act-btn" onclick="askSentraAi('How do you prevent false positives on regional brand handles?')">️ Regional Handles</button>
           </div>
 
           <button class="btn" id="sentraAiBtn" style="width:100%;justify-content:center;padding:10px;font-size:0.82rem" onclick="askSentraAi()">
@@ -1387,16 +1450,16 @@ tr.selected td{background:var(--cyan-glow)!important}
         </div>
         <div class="grid-2">
           <div class="card">
-            <div class="card-header"><span class="card-title">🔴 Highest-risk Domains</span><span class="card-sub" id="recentThreatsSub">from your scans and the live feed</span></div>
+            <div class="card-header"><span class="card-title"> Highest-risk Domains</span><span class="card-sub" id="recentThreatsSub">from your scans and the live feed</span></div>
             <div class="table-wrap"><table><thead><tr><th>Domain</th><th>Signal</th><th>Score</th><th>When</th></tr></thead><tbody id="recentThreats"></tbody></table></div>
           </div>
           <div class="card">
-            <div class="card-header"><span class="card-title">📊 Detection Categories</span></div>
+            <div class="card-header"><span class="card-title"> Detection Categories</span></div>
             <div class="chart-area"><div class="chart-bars" id="categoryChart"></div></div>
           </div>
         </div>
         <div class="card">
-          <div class="card-header"><span class="card-title">🔑 Keyword Hits in the Live Feed</span><span class="badge info" id="keywordHitsSub">this session</span></div>
+          <div class="card-header"><span class="card-title"> Keyword Hits in the Live Feed</span><span class="badge info" id="keywordHitsSub">this session</span></div>
           <div id="keywordHits" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px"></div>
         </div>
       </div>
@@ -1418,7 +1481,7 @@ tr.selected td{background:var(--cyan-glow)!important}
               <select class="api-select" id="feedBrandFilter" title="Show only certificates matching a brand"><option value="">All brands</option></select>
               <label class="checkbox" style="display:flex;align-items:center;gap:6px;color:var(--text-dim);font-size:.72rem"><input type="checkbox" id="feedOnlyRisky"> only score ≥ 40</label>
               <label class="checkbox" style="display:flex;align-items:center;gap:6px;color:var(--text-dim);font-size:.72rem" title="Play a tone when a critical alert is raised"><input type="checkbox" id="feedSound" onchange="setSound(this.checked)"> sound</label>
-              <button class="btn-sm" onclick="toggleFeed()" id="feedToggle" style="border-color:var(--green);color:var(--green)">⏸ Pause</button>
+              <button class="btn-sm" onclick="toggleFeed()" id="feedToggle" style="border-color:var(--green);color:var(--green)"> Pause</button>
               <button class="btn-sm" onclick="reconnectFeed()">↻ Reconnect</button>
               <button class="btn-sm" onclick="replayFeed()" id="replayBtn" title="Replays a bundled synthetic sample when the live feed is unreachable">▶ Replay sample</button>
             </div>
@@ -1426,7 +1489,7 @@ tr.selected td{background:var(--cyan-glow)!important}
           <div class="feed-container" id="liveFeed"><div style="padding:16px;color:var(--text-muted)">Waiting for the first matching certificate…</div></div>
         </div>
         <div class="card">
-          <div class="card-header"><span class="card-title">🗂 CT logs being tailed</span>
+          <div class="card-header"><span class="card-title"> CT logs being tailed</span>
             <div style="display:flex;gap:14px;align-items:center;font-size:.72rem;color:var(--text-dim);flex-wrap:wrap">
               <span>live <strong id="ctLogsLive" style="font-family:var(--font-mono);color:var(--text)">—</strong></span>
               <span>entries parsed <strong id="ctEntries" style="font-family:var(--font-mono);color:var(--text)">0</strong></span>
@@ -1446,7 +1509,7 @@ tr.selected td{background:var(--cyan-glow)!important}
         <p class="page-desc">Phishing heuristics, brand impersonation and squatting analysis by the multi-layer engine, enriched live with DNS, Certificate Transparency and RDAP.</p>
         <div class="scanner-box">
           <input class="scanner-input" id="scanInput" placeholder="Enter a domain or URL (e.g., novapay-secure-login.xyz, n0vapay.com)" onkeydown="if(event.key==='Enter')scanDomain()">
-          <button class="scan-btn" id="scanBtn" onclick="scanDomain()">🔍 Analyze</button>
+          <button class="scan-btn" id="scanBtn" onclick="scanDomain()"> Analyze</button>
         </div>
         <div style="display:flex;gap:16px;margin:-6px 0 14px;flex-wrap:wrap;font-size:.75rem;color:var(--text-dim)">
           <label class="checkbox" style="display:flex;align-items:center;gap:6px"><input type="checkbox" id="scanEnrich" checked> Live enrichment (DoH · crt.sh · RDAP)</label>
@@ -1454,14 +1517,14 @@ tr.selected td{background:var(--cyan-glow)!important}
         </div>
         <div class="result-panel" id="scanResult"></div>
         <div class="card">
-          <div class="card-header"><span class="card-title">📋 Recent Scans</span></div>
+          <div class="card-header"><span class="card-title"> Recent Scans</span></div>
           <div class="table-wrap"><table><thead><tr><th>Domain</th><th>Risk Score</th><th>Level</th><th>Categories</th><th>Scanned</th></tr></thead><tbody id="recentScans"></tbody></table></div>
         </div>
       </div>
 
       <!-- ──── BULK ──── -->
       <div id="page-bulk" class="page">
-        <h2 class="page-title">📋 Bulk Domain Scanner</h2>
+        <h2 class="page-title"> Bulk Domain Scanner</h2>
         <p class="page-desc">Paste a list of domains. Each one runs through the full engine; optionally each is resolved via DNS-over-HTTPS.</p>
         <div class="card">
           <div class="card-header"><span class="card-title">Input</span><span class="card-sub" id="bulkCount">0 domains</span></div>
@@ -1479,13 +1542,13 @@ tr.selected td{background:var(--cyan-glow)!important}
         <div class="card">
           <div class="card-header"><span class="card-title">Results</span><span class="card-sub" id="bulkResultCount">—</span></div>
           <div class="table-wrap"><table><thead><tr><th>Domain</th><th>Score</th><th>Level</th><th>Brands</th><th>Categories</th><th>DNS</th></tr></thead>
-            <tbody id="bulkResults"><tr><td colspan="6"><div class="empty-state"><div class="ico">📋</div><div class="title">No scans yet</div><div class="sub">Paste domains above and click Scan All</div></div></td></tr></tbody></table></div>
+            <tbody id="bulkResults"><tr><td colspan="6"><div class="empty-state"><div class="ico"></div><div class="title">No scans yet</div><div class="sub">Paste domains above and click Scan All</div></div></td></tr></tbody></table></div>
         </div>
       </div>
 
       <!-- ──── TYPOSQUAT HUNTER ──── -->
       <div id="page-squatgen" class="page">
-        <h2 class="page-title">🧬 Typosquat Hunter</h2>
+        <h2 class="page-title"> Typosquat Hunter</h2>
         <p class="page-desc">Generates technique-tagged permutations of a brand (typos, homoglyphs, leetspeak, combo-squats, TLD swaps) and resolves them over DNS-over-HTTPS. Anything that resolves becomes a <strong>sighting</strong>.</p>
         <div class="card">
           <div class="card-header"><span class="card-title">Target Brand</span></div>
@@ -1522,56 +1585,56 @@ tr.selected td{background:var(--cyan-glow)!important}
 
       <!-- ──── DOMAIN INTEL ──── -->
       <div id="page-threatintel" class="page">
-        <h2 class="page-title">🧠 Domain Intelligence</h2>
+        <h2 class="page-title"> Domain Intelligence</h2>
         <p class="page-desc">Real lookups from the browser: DNS-over-HTTPS resolution, Certificate Transparency history (crt.sh), RDAP registration age and URLhaus reputation. Feeds that require an API key (VirusTotal, Google Safe Browsing, PhishTank) run in the Python backend.</p>
         <div class="scanner-box">
           <input class="scanner-input" id="intelInput" placeholder="domain to investigate" onkeydown="if(event.key==='Enter')runIntel()">
-          <button class="scan-btn" id="intelBtn" onclick="runIntel()">🧠 Investigate</button>
+          <button class="scan-btn" id="intelBtn" onclick="runIntel()"> Investigate</button>
         </div>
         <div class="result-panel" id="intelResult"></div>
         <div class="card">
           <div class="card-header"><span class="card-title">Recent investigations</span><button class="btn-sm" onclick="intelOpenAlerts()">Investigate open alerts</button></div>
           <div class="table-wrap"><table><thead><tr><th>Domain</th><th>Resolves</th><th>CT certs</th><th>Registered</th><th>Age</th><th>URLhaus</th><th>Verdict</th><th>When</th></tr></thead>
-            <tbody id="tiTable"><tr><td colspan="8"><div class="empty-state"><div class="ico">🧠</div><div class="title">No investigations yet</div></div></td></tr></tbody></table></div>
+            <tbody id="tiTable"><tr><td colspan="8"><div class="empty-state"><div class="ico"></div><div class="title">No investigations yet</div></div></td></tr></tbody></table></div>
         </div>
       </div>
 
       <!-- ──── CT LOG EXPLORER ──── -->
       <div id="page-ctlog" class="page">
-        <h2 class="page-title">📜 CT Log Explorer</h2>
+        <h2 class="page-title"> CT Log Explorer</h2>
         <p class="page-desc">Query crt.sh for every certificate ever logged for a domain or wildcard pattern (e.g. <code>%.novapay.com</code>).</p>
         <div class="scanner-box">
           <input class="scanner-input" id="ctInput" placeholder="novapay.com or %.novapay.com" onkeydown="if(event.key==='Enter')runCTLookup()">
-          <button class="scan-btn" id="ctBtn" onclick="runCTLookup()">📜 Search</button>
+          <button class="scan-btn" id="ctBtn" onclick="runCTLookup()"> Search</button>
         </div>
         <div class="result-panel" id="ctResult"></div>
       </div>
 
       <!-- ──── DNS ──── -->
       <div id="page-dnslookup" class="page">
-        <h2 class="page-title">🌐 DNS Lookup</h2>
+        <h2 class="page-title"> DNS Lookup</h2>
         <p class="page-desc">A, AAAA, MX, NS, TXT, CNAME and SOA records via Google DNS-over-HTTPS.</p>
         <div class="scanner-box">
           <input class="scanner-input" id="dnsInput" placeholder="domain" onkeydown="if(event.key==='Enter')runDnsLookup()">
-          <button class="scan-btn" id="dnsBtn" onclick="runDnsLookup()">🌐 Resolve</button>
+          <button class="scan-btn" id="dnsBtn" onclick="runDnsLookup()"> Resolve</button>
         </div>
         <div class="result-panel" id="dnsResult"></div>
       </div>
 
       <!-- ──── RDAP ──── -->
       <div id="page-rdap" class="page">
-        <h2 class="page-title">📇 RDAP / WHOIS</h2>
+        <h2 class="page-title"> RDAP / WHOIS</h2>
         <p class="page-desc">Registration data (registrar, dates, nameservers, status, abuse contact) via the IANA RDAP bootstrap.</p>
         <div class="scanner-box">
           <input class="scanner-input" id="rdapInput" placeholder="domain" onkeydown="if(event.key==='Enter')runRdap()">
-          <button class="scan-btn" id="rdapBtn" onclick="runRdap()">📇 Lookup</button>
+          <button class="scan-btn" id="rdapBtn" onclick="runRdap()"> Lookup</button>
         </div>
         <div class="result-panel" id="rdapResult"></div>
       </div>
 
       <!-- ──── HISTORY ──── -->
       <div id="page-history" class="page">
-        <h2 class="page-title">📚 Scan History</h2>
+        <h2 class="page-title"> Scan History</h2>
         <p class="page-desc">Every scan is stored locally (IndexedDB). Click a row to re-run it.</p>
         <div class="card">
           <div class="card-header"><span class="card-title">Your Scans</span>
@@ -1600,7 +1663,7 @@ tr.selected td{background:var(--cyan-glow)!important}
           <div class="stat-card green"><div class="stat-label">Resolved</div><div class="stat-value green" id="alertResolved">0</div></div>
         </div>
         <div class="card">
-          <div class="card-header"><span class="card-title">🚨 Alerts</span>
+          <div class="card-header"><span class="card-title"> Alerts</span>
             <div style="display:flex;gap:8px;align-items:center">
               <select class="api-select" id="alertStatusFilter" onchange="renderAlerts()">
                 <option value="open,investigating">Open + investigating</option><option value="open">Open</option><option value="investigating">Investigating</option><option value="resolved">Resolved</option><option value="false_positive">False positives</option><option value="">All</option>
@@ -1616,11 +1679,11 @@ tr.selected td{background:var(--cyan-glow)!important}
 
       <!-- ──── SIGHTINGS ──── -->
       <div id="page-sightings" class="page">
-        <h2 class="page-title">🎯 Typosquat Sightings</h2>
+        <h2 class="page-title"> Typosquat Sightings</h2>
         <p class="page-desc">Look-alike domains of protected brands that resolved when checked by the Typosquat Hunter or the automatic Watchtower sweep.</p>
         <div class="card" style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:14px 18px">
           <label class="toggle"><input type="checkbox" id="wtToggle" onchange="setWatchtower(this.checked)"><span class="toggle-slider"></span></label>
-          <div style="flex:1;min-width:220px"><strong style="font-size:.9rem">🗼 Watchtower</strong><div id="wtStatus" style="font-size:.74rem;color:var(--text-dim);margin-top:2px">—</div></div>
+          <div style="flex:1;min-width:220px"><strong style="font-size:.9rem"> Watchtower</strong><div id="wtStatus" style="font-size:.74rem;color:var(--text-dim);margin-top:2px">—</div></div>
           <button class="btn-sm" onclick="runWatchtowerNow()">▶ Sweep now</button>
         </div>
         <div class="stats-grid" style="margin-bottom:16px">
@@ -1645,7 +1708,7 @@ tr.selected td{background:var(--cyan-glow)!important}
       <div id="page-analytics" class="page">
         <div class="page-head"><div><h2 class="page-title">Analytics</h2>
         <p class="page-desc">Computed from the scans, alerts and feed matches stored in this browser.</p></div>
-        <div class="page-actions"><button class="btn secondary" onclick="exportSummaryReport()">📄 Weekly report (HTML)</button></div></div>
+        <div class="page-actions"><button class="btn secondary" onclick="exportSummaryReport()"> Weekly report (HTML)</button></div></div>
         <div class="stats-grid">
           <div class="stat-card cyan"><div class="stat-label">Scans (7 days)</div><div class="stat-value cyan" id="anScans">0</div></div>
           <div class="stat-card red"><div class="stat-label">Alerts (7 days)</div><div class="stat-value red" id="anAlerts">0</div></div>
@@ -1653,10 +1716,10 @@ tr.selected td{background:var(--cyan-glow)!important}
           <div class="stat-card green"><div class="stat-label">False-positive rate</div><div class="stat-value green" id="anFpRate">—</div></div>
         </div>
         <div class="grid-2">
-          <div class="card"><div class="card-header"><span class="card-title">📈 Daily activity (scans + alerts)</span></div><div class="chart-area"><div class="chart-bars" id="weeklyChart"></div></div></div>
-          <div class="card"><div class="card-header"><span class="card-title">🎯 Most-targeted brands</span></div><div class="chart-area"><div class="chart-bars" id="brandChart"></div></div></div>
+          <div class="card"><div class="card-header"><span class="card-title"> Daily activity (scans + alerts)</span></div><div class="chart-area"><div class="chart-bars" id="weeklyChart"></div></div></div>
+          <div class="card"><div class="card-header"><span class="card-title"> Most-targeted brands</span></div><div class="chart-area"><div class="chart-bars" id="brandChart"></div></div></div>
         </div>
-        <div class="card"><div class="card-header"><span class="card-title">🕐 Feed matches by hour (UTC)</span></div><div class="chart-area" style="height:120px"><div class="chart-bars" id="hourlyChart"></div></div></div>
+        <div class="card"><div class="card-header"><span class="card-title"> Feed matches by hour (UTC)</span></div><div class="chart-area" style="height:120px"><div class="chart-bars" id="hourlyChart"></div></div></div>
       </div>
 
       <!-- ──── NOTIFICATIONS ──── -->
@@ -1665,19 +1728,19 @@ tr.selected td{background:var(--cyan-glow)!important}
         <p class="page-desc">Browser notifications work right here. Email, Slack, Teams, Telegram, webhook and Syslog/CEF delivery are performed by the Python backend (<code>python main.py monitor</code>), which cannot run inside a static page.</p>
         <div class="notif-grid">
           <div class="notif-card">
-            <div class="notif-card-title">🔔 Browser notifications <label class="toggle" style="margin-left:auto"><input type="checkbox" id="notifEnabled" onchange="toggleNotifications(this.checked)"><span class="toggle-slider"></span></label></div>
+            <div class="notif-card-title"> Browser notifications <label class="toggle" style="margin-left:auto"><input type="checkbox" id="notifEnabled" onchange="toggleNotifications(this.checked)"><span class="toggle-slider"></span></label></div>
             <div class="notif-field"><label>Minimum severity</label>
               <select class="api-select" id="notifMinSeverity" onchange="saveSetting('notifMinSeverity',this.value)" style="width:100%"><option value="critical">Critical only</option><option value="high" selected>High and above</option><option value="medium">Medium and above</option></select></div>
             <div id="notifStatus" style="margin-top:12px;padding:10px;background:var(--bg-deep);border-radius:var(--radius-sm);font-size:.75rem;color:var(--text-dim)">Permission: unknown</div>
             <button class="btn-sm" style="margin-top:10px" onclick="testNotification()">Send test notification</button>
           </div>
           <div class="notif-card">
-            <div class="notif-card-title">🔗 Webhook payload preview</div>
+            <div class="notif-card-title"> Webhook payload preview</div>
             <p style="font-size:.75rem;color:var(--text-dim);margin-bottom:8px">This is the exact JSON the backend posts to Slack/Teams/webhook targets for the most recent alert.</p>
             <pre id="webhookPreview" style="font-family:var(--font-mono);font-size:.68rem;background:var(--bg-deep);padding:10px;border-radius:var(--radius-sm);max-height:260px;overflow:auto;color:var(--text-dim)">No alerts yet.</pre>
           </div>
           <div class="notif-card">
-            <div class="notif-card-title">🖥️ Server-side channels</div>
+            <div class="notif-card-title">️ Server-side channels</div>
             <p style="font-size:.75rem;color:var(--text-dim);line-height:1.6">Configure in <code>config.yaml</code> → <code>notifications:</code><br>
               • Email (SMTP) &nbsp;• Slack Block Kit &nbsp;• Microsoft Teams<br>• Telegram &nbsp;• HMAC-signed webhook &nbsp;• Syslog / CEF<br><br>
               Then run <code>python main.py test-notify</code> to verify every channel.</p>
@@ -1691,20 +1754,20 @@ tr.selected td{background:var(--cyan-glow)!important}
         <p class="page-desc">Everything here is stored locally and applied immediately to the engine and the live feed.</p>
         <div class="grid-2">
           <div class="card">
-            <div class="card-header"><span class="card-title">🔑 CertStream Keywords</span><button class="btn-sm" onclick="resetKeywords()">Reset defaults</button></div>
+            <div class="card-header"><span class="card-title"> CertStream Keywords</span><button class="btn-sm" onclick="resetKeywords()">Reset defaults</button></div>
             <div id="keywordList" style="font-family:var(--font-mono);font-size:.8rem;line-height:2"></div>
             <div style="display:flex;gap:8px;margin-top:10px"><input class="api-select" id="newKeyword" placeholder="add keyword" style="flex:1" onkeydown="if(event.key==='Enter')addKeyword()"><button class="btn-sm" onclick="addKeyword()">Add</button></div>
             <p style="font-size:.7rem;color:var(--text-muted);margin-top:8px">Keywords shorter than 3 characters only match whole tokens (so <code>kw</code> does not match <code>hawkwind</code>).</p>
           </div>
           <div class="card">
-            <div class="card-header"><span class="card-title">✅ Allowlist</span></div>
+            <div class="card-header"><span class="card-title"> Allowlist</span></div>
             <div id="allowlistList" style="font-family:var(--font-mono);font-size:.8rem;line-height:2"></div>
             <div style="display:flex;gap:8px;margin-top:10px"><input class="api-select" id="newAllow" placeholder="domain (subdomains included)" style="flex:1" onkeydown="if(event.key==='Enter')addAllowlist()"><button class="btn-sm" onclick="addAllowlist()">Add</button></div>
           </div>
         </div>
         <div class="grid-2">
           <div class="card">
-            <div class="card-header"><span class="card-title">🏦 Custom brand profile</span></div>
+            <div class="card-header"><span class="card-title"> Custom brand profile</span></div>
             <div class="notif-field"><label>Name</label><input id="cbName" placeholder="NovaPay"></div>
             <div class="notif-field"><label>Short name</label><input id="cbShort" placeholder="NovaPay"></div>
             <div class="notif-field"><label>Domains (comma separated)</label><input id="cbDomains" placeholder="novapay.com, novapay.net"></div>
@@ -1715,7 +1778,7 @@ tr.selected td{background:var(--cyan-glow)!important}
             <div id="customBrandList" style="margin-top:10px;font-size:.78rem"></div>
           </div>
           <div class="card">
-            <div class="card-header"><span class="card-title">🧪 Detection rules</span><span class="card-sub">regex · applied to the live feed and scans</span></div>
+            <div class="card-header"><span class="card-title"> Detection rules</span><span class="card-sub">regex · applied to the live feed and scans</span></div>
             <div id="ruleList" class="rule-list"></div>
             <div style="display:grid;grid-template-columns:1fr 2fr auto auto;gap:8px;margin-top:12px;align-items:center">
               <input class="api-select" id="ruleName" placeholder="Rule name (e.g. Login Lure)">
@@ -1727,7 +1790,7 @@ tr.selected td{background:var(--cyan-glow)!important}
             <p style="font-size:.7rem;color:var(--text-muted);margin-top:8px">Examples: <code>^(secure|login|verify)-.*\.(xyz|top|icu)$</code>, <code>(support|helpdesk).*(portal|auth)</code>. Matches raise a <em>custom_rule</em> alert with the chosen severity.</p>
           </div>
           <div class="card">
-            <div class="card-header"><span class="card-title">⚙️ Engine &amp; feed</span></div>
+            <div class="card-header"><span class="card-title">️ Engine &amp; feed</span></div>
             <div class="notif-field"><label>Store feed matches with score ≥</label><input id="setFeedMinScore" type="number" min="0" max="100" value="0" onchange="saveSetting('feedMinScore',Number(this.value))"></div>
             <div class="notif-field"><label>Raise alerts from feed for severity ≥</label><select class="api-select" id="setFeedAlertSeverity" style="width:100%" onchange="saveSetting('feedAlertSeverity',this.value)"><option value="critical">critical</option><option value="high" selected>high</option><option value="medium">medium</option><option value="low">low</option></select></div>
             <div class="notif-field"><label>Live feed source</label><select class="api-select" id="setFeedSource" style="width:100%" onchange="saveSetting('feedSource',this.value);reconnectFeed()"><option value="ctlogs">Read CT logs directly (recommended, no third party)</option><option value="certstream">CertStream WebSocket (legacy)</option></select></div>
@@ -1745,19 +1808,19 @@ tr.selected td{background:var(--cyan-glow)!important}
               <button class="btn-sm" onclick="clearAllData()" style="border-color:var(--red);color:var(--red)">Clear all local data</button>
             </div>
             <div class="storage-panel" id="storagePanel">
-              <div class="card-header" style="margin:18px 0 10px"><span class="card-title">💾 Storage &amp; retention</span><span class="card-sub" id="storageUsage">—</span></div>
+              <div class="card-header" style="margin:18px 0 10px"><span class="card-title"> Storage &amp; retention</span><span class="card-sub" id="storageUsage">—</span></div>
               <div class="storage-bar"><div id="storageFill"></div></div>
               <div id="storageCounts" class="storage-counts"></div>
               <div style="display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap;font-size:.75rem;color:var(--text-dim)">
                 Purge scans &amp; feed matches older than <input class="api-select" id="retentionDays" type="number" min="1" max="3650" value="90" style="width:70px" onchange="saveSetting('retentionDays',Number(this.value)||90)"> days
                 <button class="act-btn" onclick="purgeOldData()">Purge now</button>
-                <button class="act-btn" id="installBtn" style="display:none" onclick="installApp()">⬇ Install app</button>
+                <button class="act-btn" id="installBtn" style="display:none" onclick="installApp()">v Install app</button>
               </div>
             </div>
           </div>
         </div>
         <div class="card">
-          <div class="card-header"><span class="card-title">ℹ️ About</span></div>
+          <div class="card-header"><span class="card-title">️ About</span></div>
           <p style="font-size:.78rem;color:var(--text-dim);line-height:1.7" id="aboutText"></p>
         </div>
       </div>
@@ -1787,7 +1850,7 @@ tr.selected td{background:var(--cyan-glow)!important}
 <!-- Help -->
 <div class="overlay" id="helpOverlay" onclick="if(event.target===this)closeHelp()">
   <div class="modal" role="dialog" aria-label="Keyboard shortcuts">
-    <div class="card-header"><span class="card-title">⌨️ Keyboard shortcuts</span><button class="icon-btn" onclick="closeHelp()" aria-label="Close" data-icon="close"></button></div>
+    <div class="card-header"><span class="card-title">️ Keyboard shortcuts</span><button class="icon-btn" onclick="closeHelp()" aria-label="Close" data-icon="close"></button></div>
     <div class="shortcuts">
       <div><span class="kbd">Ctrl</span> <span class="kbd">K</span><span>Search &amp; commands</span></div>
       <div><span class="kbd">/</span><span>Focus the domain scanner</span></div>
@@ -1865,9 +1928,9 @@ tr.selected td{background:var(--cyan-glow)!important}
 
   // 4. Lookalike Playground Logic
   const LA_SAMPLES = {
-    'N0vaPay Support': { score: 87, diff: '<span style="background:var(--ochre-wash);color:var(--yellow);padding:2px 4px;border-radius:4px">N0vaPay</span> <span style="background:var(--copper-wash);color:var(--red);padding:2px 4px;border-radius:4px">+Support</span>', tags: ["Homoglyph Substitution: '0' ➔ 'o'", "Keyword Append: '+Support'", "Disposition: Candidate For Investigation"] },
+    'N0vaPay Support': { score: 87, diff: '<span style="background:var(--ochre-wash);color:var(--yellow);padding:2px 4px;border-radius:4px">N0vaPay</span> <span style="background:var(--copper-wash);color:var(--red);padding:2px 4px;border-radius:4px">+Support</span>', tags: ["Homoglyph Substitution: '0' -> 'o'", "Keyword Append: '+Support'", "Disposition: Candidate For Investigation"] },
     'Nova Pay Refunds': { score: 82, diff: '<span>Nova Pay</span> <span style="background:var(--copper-wash);color:var(--red);padding:2px 4px;border-radius:4px">+Refunds</span>', tags: ["Whitespace Variation: 'Nova Pay'", "Financial Keyword: '+Refunds'", "Disposition: Immediate Review Required"] },
-    'NovaPya': { score: 85, diff: '<span style="background:var(--iris-wash);color:var(--purple);padding:2px 4px;border-radius:4px">NovaP<u style="text-decoration-style:dotted">ya</u></span>', tags: ["Letter Transposition: 'ay' ➔ 'ya'", "Typo Family: Adjacent Inversion", "Disposition: High Typosquat Probability"] },
+    'NovaPya': { score: 85, diff: '<span style="background:var(--iris-wash);color:var(--purple);padding:2px 4px;border-radius:4px">NovaP<u style="text-decoration-style:dotted">ya</u></span>', tags: ["Letter Transposition: 'ay' -> 'ya'", "Typo Family: Adjacent Inversion", "Disposition: High Typosquat Probability"] },
     'Novapay Café': { score: 65, diff: '<span>Novapay</span> <span style="color:var(--text-dim)">+Café</span>', tags: ["Generic Commercial Suffix: '+Café'", "Context: Non-Adversarial Business", "Disposition: Baseline Unflagged"] },
     'novapay_help24': { score: 80, diff: '<span>novapay</span><span style="background:var(--copper-wash);color:var(--red);padding:2px 4px;border-radius:4px">_help24</span>', tags: ["Social Account Impersonation", "Urgency Pattern: 'help24'", "Disposition: Escalated Takedown Candidate"] }
   };
@@ -2011,7 +2074,7 @@ tr.selected td{background:var(--cyan-glow)!important}
     const btn = document.getElementById("sentraAiBtn");
     if (respEl) {
       respEl.style.display = "block";
-      respEl.innerHTML = '<span style="color:var(--cyan)">⚡ SentraAI is formulating answer…</span>';
+      respEl.innerHTML = '<span style="color:var(--cyan)"> SentraAI is formulating answer…</span>';
     }
     if (btn) btn.disabled = true;
 
@@ -2033,5 +2096,35 @@ tr.selected td{background:var(--cyan-glow)!important}
   };
 })();
 </script>
+
+<!-- FRAMER MOTION NAV PAGES MODAL -->
+<div id="navPageModal" class="framer-modal-overlay">
+  <div class="framer-modal-content">
+    <div class="framer-modal-header">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="width:10px;height:10px;border-radius:50%;background:#aa95f9;display:inline-block;"></span>
+        <span style="font-weight:800;font-size:1.05rem;color:#fff;" id="framerModalTitle">Capabilities</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="hero-cta-btn" style="padding:6px 14px;font-size:0.78rem;" onclick="closeNavModal();enterDashboard();">Launch Security Console -></button>
+        <button class="icon-btn" onclick="closeNavModal()" style="border:none;background:transparent;color:rgba(255,255,255,0.7);cursor:pointer;">x</button>
+      </div>
+    </div>
+    
+    <div class="framer-modal-nav">
+      <button class="framer-nav-tab active" id="framerTab-capabilities" onclick="switchNavModalTab('capabilities')">Capabilities</button>
+      <button class="framer-nav-tab" id="framerTab-how" onclick="switchNavModalTab('how')">How It Works</button>
+      <button class="framer-nav-tab" id="framerTab-experience" onclick="switchNavModalTab('experience')">Protection Experience</button>
+      <button class="framer-nav-tab" id="framerTab-roi" onclick="switchNavModalTab('roi')">ROI Estimator</button>
+      <button class="framer-nav-tab" id="framerTab-solutions" onclick="switchNavModalTab('solutions')">Industry Solutions</button>
+      <button class="framer-nav-tab" id="framerTab-faq" onclick="switchNavModalTab('faq')">Knowledge Base</button>
+    </div>
+
+    <div class="framer-tab-body" id="framerTabBody">
+      <!-- Dynamic Tab Content Loaded by JS -->
+    </div>
+  </div>
+</div>
+
 </body>
 </html>

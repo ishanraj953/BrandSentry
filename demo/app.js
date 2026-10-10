@@ -453,7 +453,7 @@
     ].filter((r) => r.score >= 40).sort((a, b) => b.score - a.score || (b.ts > a.ts ? 1 : -1)).slice(0, 8);
     $("recentThreats").innerHTML = rows.length
       ? rows.map((r) => `<tr><td style="font-family:var(--font-mono);font-size:.75rem">${esc(r.domain)}</td><td><span class="badge ${esc(r.level)}">${esc(String(r.signal).replace(/_/g, " ").slice(0, 28))}</span></td><td><span style="font-family:var(--font-mono);font-weight:700;color:${scoreColor(r.score)}">${Math.round(r.score)}</span></td><td style="color:var(--text-dim);font-size:.75rem">${ago(r.ts)}</td></tr>`).join("")
-      : `<tr><td colspan="4"><div class="empty-state"><div class="ico">🔍</div><div class="title">Nothing risky yet</div><div class="sub">Scan a domain or wait for the live feed</div></div></td></tr>`;
+      : `<tr><td colspan="4"><div class="empty-state"><div class="ico"></div><div class="title">Nothing risky yet</div><div class="sub">Scan a domain or wait for the live feed</div></div></td></tr>`;
     const cats = {};
     scans.forEach((s) => (s.categories || []).forEach((c) => { cats[c] = (cats[c] || 0) + 1; }));
     alerts.forEach((a) => { cats[a.alert_type] = (cats[a.alert_type] || 0) + 1; });
@@ -632,7 +632,7 @@
   function toggleFeed() {
     feed.running = !feed.running;
     const btn = $("feedToggle");
-    if (feed.running) { btn.textContent = "⏸ Pause"; btn.style.borderColor = "var(--green)"; btn.style.color = "var(--green)"; }
+    if (feed.running) { btn.textContent = " Pause"; btn.style.borderColor = "var(--green)"; btn.style.color = "var(--green)"; }
     else { btn.textContent = "▶ Resume"; btn.style.borderColor = "var(--orange)"; btn.style.color = "var(--orange)"; }
   }
   function reconnectFeed() { feed.retry = 0; feed.connect(); }
@@ -719,7 +719,7 @@
       await refreshCounts();
       renderRecentScans();
     } catch (e) { toast("Scan failed: " + e.message, "crit"); console.error(e); }
-    finally { btn.disabled = false; btn.textContent = "🔍 Analyze"; }
+    finally { btn.disabled = false; btn.textContent = " Analyze"; }
   }
   window.scanDomain = scanDomain;
 
@@ -739,7 +739,7 @@
       <div class="risk-meter"><div class="risk-meter-fill" style="width:${p.risk_score}%;background:${sc}"></div></div>
       <div style="display:flex;gap:8px;margin:12px 0;flex-wrap:wrap">
         <span class="badge ${esc(p.risk_level)}" style="font-size:.8rem;padding:5px 14px">${esc(p.risk_level)}</span>
-        ${p.is_phishing ? '<span class="badge critical" style="font-size:.8rem;padding:5px 14px">⚠ PHISHING LIKELY</span>' : '<span class="badge clean" style="font-size:.8rem;padding:5px 14px">✓ No strong signal</span>'}
+        ${p.is_phishing ? '<span class="badge critical" style="font-size:.8rem;padding:5px 14px"> PHISHING LIKELY</span>' : '<span class="badge clean" style="font-size:.8rem;padding:5px 14px">[OK] No strong signal</span>'}
         ${p.matched_brands.map((b) => `<span class="badge high" style="font-size:.75rem">targets ${esc(b)}</span>`).join("")}
       </div>
       ${p.categories.length ? `<div style="margin:8px 0">${p.categories.map((c) => `<span class="badge info" style="margin:2px">${esc(c)}</span>`).join("")}</div>` : ""}
@@ -758,11 +758,11 @@
         html += section("Registration (RDAP)", `<dl class="kv-grid"><dt>Registrar</dt><dd class="wrap">${esc(rd.registrar || "—")}</dd><dt>Created</dt><dd>${esc((rd.created || "").slice(0, 10) || "—")}${rd.age_days !== null ? ` <span style="color:${rd.age_days < 30 ? "var(--red)" : "var(--text-dim)"}">(${rd.age_days} days ago)</span>` : ""}</dd><dt>Expires</dt><dd>${esc((rd.expires || "").slice(0, 10) || "—")}</dd><dt>Nameservers</dt><dd>${rd.nameservers.map(esc).join("<br>") || "—"}</dd><dt>Abuse contact</dt><dd class="wrap">${esc(rd.abuse || "—")}</dd><dt>Status</dt><dd class="wrap">${rd.status.map((s) => `<span class="badge info" style="margin:2px">${esc(s)}</span>`).join("") || "—"}</dd></dl>`);
       }
       if (live.certs && live.certs.length) html += section(`Certificate Transparency (${live.certs.length})`, live.certs.slice(0, 5).map((c) => `<div class="cert-card"><div class="cert-cn">${esc(c.common_name || c.name_value || "(no CN)")}</div><div class="cert-meta">Logged ${esc((c.entry_timestamp || "").slice(0, 10))} · valid ${esc((c.not_before || "").slice(0, 10))} → ${esc((c.not_after || "").slice(0, 10))}</div><div class="cert-issuer">${esc(c.issuer_name || "")}</div></div>`).join("") + (live.certs.length > 5 ? `<div style="font-size:.7rem;color:var(--text-muted);margin-top:6px">+${live.certs.length - 5} more in the CT Log Explorer</div>` : ""));
-      if (live.errors.length) html += `<div style="margin-top:12px;padding:10px;background:rgba(255,140,0,.08);border:1px solid var(--orange-dim);border-radius:var(--radius-sm);font-size:.7rem;color:var(--orange)">⚠ Partial enrichment: ${live.errors.map(esc).join(" · ")}</div>`;
+      if (live.errors.length) html += `<div style="margin-top:12px;padding:10px;background:rgba(255,140,0,.08);border:1px solid var(--orange-dim);border-radius:var(--radius-sm);font-size:.7rem;color:var(--orange)"> Partial enrichment: ${live.errors.map(esc).join(" · ")}</div>`;
     }
-    if (opts.pending) html += `<div class="scan-progress" style="margin-top:12px"><div class="scan-step running"><span class="step-ico">⏳</span><span>Live enrichment: DNS-over-HTTPS · crt.sh · RDAP</span><span class="step-meta">running…</span></div></div>`;
+    if (opts.pending) html += `<div class="scan-progress" style="margin-top:12px"><div class="scan-step running"><span class="step-ico"></span><span>Live enrichment: DNS-over-HTTPS · crt.sh · RDAP</span><span class="step-meta">running…</span></div></div>`;
     html += `<div style="margin-top:16px;padding:12px;background:var(--bg-deep);border-radius:var(--radius-sm);font-size:.85rem"><strong>Recommendation:</strong> ${esc(p.recommendation)}</div>
-      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button class="btn-sm" onclick="quickIntel('${esc(result.domain)}')">🧠 Investigate</button><button class="btn-sm" onclick="quickSquat('${esc(parsed.registrable || result.domain)}')">🧬 Hunt look-alikes</button><button class="btn-sm" onclick="addAllowlistDomain('${esc(result.domain)}')">✅ Allowlist</button></div></div>`;
+      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button class="btn-sm" onclick="quickIntel('${esc(result.domain)}')"> Investigate</button><button class="btn-sm" onclick="quickSquat('${esc(parsed.registrable || result.domain)}')"> Hunt look-alikes</button><button class="btn-sm" onclick="addAllowlistDomain('${esc(result.domain)}')"> Allowlist</button></div></div>`;
     panel.innerHTML = html;
     panel.classList.add("show");
     emit("scan", { result, opts });
@@ -771,7 +771,7 @@
     const scans = (await dbAll("scans")).sort((a, b) => (b.ts > a.ts ? 1 : -1)).slice(0, 12);
     const tb = $("recentScans");
     tb.innerHTML = scans.length ? scans.map((s) => `<tr class="history-row" onclick="quickScan('${esc(s.domain)}')"><td style="font-family:var(--font-mono);font-size:.75rem">${esc(s.domain)}</td><td><span style="font-family:var(--font-mono);font-weight:700;color:${scoreColor(s.score)}">${Math.round(s.score)}/100</span></td><td><span class="badge ${esc(s.level)}">${esc(s.level)}</span></td><td>${(s.categories || []).map((c) => `<span class="badge info" style="margin:1px 2px;font-size:.6rem">${esc(c)}</span>`).join("") || '<span style="color:var(--green)">—</span>'}</td><td style="color:var(--text-dim);font-size:.75rem">${ago(s.ts)}</td></tr>`).join("")
-      : `<tr><td colspan="5"><div class="empty-state"><div class="ico">🔍</div><div class="title">No scans yet</div></div></td></tr>`;
+      : `<tr><td colspan="5"><div class="empty-state"><div class="ico"></div><div class="title">No scans yet</div></div></td></tr>`;
   }
 
   // ------------------------------------------------------------------ //
@@ -788,7 +788,7 @@
     btn.disabled = true; btn.textContent = "Scanning…"; progress.style.display = "block"; tb.innerHTML = ""; BULK = [];
     let done = 0;
     for (const d of lines) {
-      progress.innerHTML = `<div class="scan-step running"><span class="step-ico">⏳</span><span>Scanning ${esc(d)}</span><span class="step-meta">${done + 1}/${lines.length}</span></div>`;
+      progress.innerHTML = `<div class="scan-step running"><span class="step-ico"></span><span>Scanning ${esc(d)}</span><span class="step-meta">${done + 1}/${lines.length}</span></div>`;
       let result;
       try { result = engine.scan(d, {}, "bulk", true); } catch (e) { done++; continue; }
       const p = result.phishing;
@@ -801,7 +801,7 @@
       if (result.brand_alerts.length) await persistBrandAlerts(result.brand_alerts, "bulk", { risk_score: p.risk_score });
       done++;
     }
-    progress.innerHTML = `<div class="scan-step done"><span class="step-ico">✓</span><span>Complete</span><span class="step-meta">${done} scanned</span></div>`;
+    progress.innerHTML = `<div class="scan-step done"><span class="step-ico">[OK]</span><span>Complete</span><span class="step-meta">${done} scanned</span></div>`;
     setTimeout(() => (progress.style.display = "none"), 2500);
     setText("bulkResultCount", `${BULK.length} scanned · ${BULK.filter((r) => r.score >= 60).length} high-risk · ${BULK.filter((r) => r.dns === true).length} resolving`);
     $("bulkExport").disabled = false; btn.disabled = false; btn.textContent = "▶ Scan All";
@@ -831,14 +831,14 @@
     renderSquatList();
     if (!$("squatResolve").checked) {
       SQUATS.forEach((p) => (p.status = "unknown"));
-      progress.innerHTML = `<div class="scan-step done"><span class="step-ico">✓</span><span>Generated ${SQUATS.length} permutations (DNS resolution disabled)</span></div>`;
+      progress.innerHTML = `<div class="scan-step done"><span class="step-ico">[OK]</span><span>Generated ${SQUATS.length} permutations (DNS resolution disabled)</span></div>`;
       renderSquatList(); btn.disabled = false; btn.textContent = "Generate & Resolve"; return;
     }
     let reg = 0, avail = 0, unk = 0, newSightings = 0;
     const BATCH = 8;
     for (let i = 0; i < SQUATS.length; i += BATCH) {
       const batch = SQUATS.slice(i, i + BATCH);
-      progress.innerHTML = `<div class="scan-step running"><span class="step-ico">⏳</span><span>Resolving via DNS-over-HTTPS</span><span class="step-meta">${i}/${SQUATS.length} · ${reg} registered</span></div>`;
+      progress.innerHTML = `<div class="scan-step running"><span class="step-ico"></span><span>Resolving via DNS-over-HTTPS</span><span class="step-meta">${i}/${SQUATS.length} · ${reg} registered</span></div>`;
       await Promise.all(batch.map(async (p) => {
         const r = await resolveQuick(p.domain);
         p.ips = r.ips;
@@ -850,11 +850,11 @@
       renderSquatList();
     }
     await saveSetting("lastSquatRun", new Date().toISOString());
-    progress.innerHTML = `<div class="scan-step done"><span class="step-ico">✓</span><span>Complete — ${reg} registered (${newSightings} new sightings), ${avail} not resolving, ${unk} unknown</span></div>`;
+    progress.innerHTML = `<div class="scan-step done"><span class="step-ico">[OK]</span><span>Complete — ${reg} registered (${newSightings} new sightings), ${avail} not resolving, ${unk} unknown</span></div>`;
     setTimeout(() => (progress.style.display = "none"), 6000);
     btn.disabled = false; btn.textContent = "Generate & Resolve";
     await refreshCounts();
-    if (reg) toast(`⚠ ${reg} look-alike domain(s) of ${brand} resolve`, "crit"); else toast("No resolving look-alikes found", "ok");
+    if (reg) toast(` ${reg} look-alike domain(s) of ${brand} resolve`, "crit"); else toast("No resolving look-alikes found", "ok");
   }
   function filterSquat(f) { SQUAT_FILTER = f; renderSquatList(); }
   function renderSquatList() {
@@ -873,10 +873,10 @@
     setText("sgLastRun", S.lastSquatRun ? fmtTime(S.lastSquatRun).slice(0, 16) : "—");
     if (status) rows = rows.filter((r) => r.status === status);
     const tb = $("sightingTable");
-    if (!rows.length) { tb.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="ico">🎯</div><div class="title">No sightings yet</div><div class="sub">Run the Typosquat Hunter for a brand</div></div></td></tr>`; return; }
+    if (!rows.length) { tb.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="ico"></div><div class="title">No sightings yet</div><div class="sub">Run the Typosquat Hunter for a brand</div></div></td></tr>`; return; }
     const badge = (s) => (s === "new" ? "critical" : s === "monitoring" ? "high" : s === "takedown_requested" ? "medium" : s === "benign" ? "clean" : "low");
     const act = (d, st, label) => `<button class="act-btn" onclick="sightingAction('${esc(d)}','${st}')">${label}</button>`;
-    tb.innerHTML = rows.map((r) => `<tr><td style="font-family:var(--font-mono);font-size:.75rem;cursor:pointer" onclick="quickScan('${esc(r.domain)}')">${esc(r.domain)}</td><td>${esc(r.brand)}</td><td><span class="badge info" style="font-size:.6rem">${esc((r.technique || "").replace(/_/g, " "))}</span></td><td style="font-family:var(--font-mono);font-size:.7rem">${esc((r.ips || []).join(", ")) || "—"}</td><td style="color:var(--text-dim);font-size:.72rem">${fmtTime(r.first_seen)}</td><td style="font-family:var(--font-mono);font-size:.72rem">${r.seen_count || 1}×</td><td><span class="badge ${badge(r.status)}">${esc(r.status.replace(/_/g, " "))}</span></td><td style="white-space:nowrap">${r.status !== "monitoring" ? act(r.domain, "monitoring", "Monitor") : ""}${r.status !== "takedown_requested" ? act(r.domain, "takedown_requested", "Takedown") : ""}${r.status !== "resolved" ? act(r.domain, "resolved", "Resolved") : ""}${r.status !== "benign" ? act(r.domain, "benign", "Benign") : ""}<button class="act-btn danger" onclick="sightingDelete('${esc(r.domain)}')">✕</button></td></tr>`).join("");
+    tb.innerHTML = rows.map((r) => `<tr><td style="font-family:var(--font-mono);font-size:.75rem;cursor:pointer" onclick="quickScan('${esc(r.domain)}')">${esc(r.domain)}</td><td>${esc(r.brand)}</td><td><span class="badge info" style="font-size:.6rem">${esc((r.technique || "").replace(/_/g, " "))}</span></td><td style="font-family:var(--font-mono);font-size:.7rem">${esc((r.ips || []).join(", ")) || "—"}</td><td style="color:var(--text-dim);font-size:.72rem">${fmtTime(r.first_seen)}</td><td style="font-family:var(--font-mono);font-size:.72rem">${r.seen_count || 1}×</td><td><span class="badge ${badge(r.status)}">${esc(r.status.replace(/_/g, " "))}</span></td><td style="white-space:nowrap">${r.status !== "monitoring" ? act(r.domain, "monitoring", "Monitor") : ""}${r.status !== "takedown_requested" ? act(r.domain, "takedown_requested", "Takedown") : ""}${r.status !== "resolved" ? act(r.domain, "resolved", "Resolved") : ""}${r.status !== "benign" ? act(r.domain, "benign", "Benign") : ""}<button class="act-btn danger" onclick="sightingDelete('${esc(r.domain)}')">x</button></td></tr>`).join("");
   }
   async function sightingAction(domain, status) { const row = await dbGet("sightings", domain); if (!row) return; row.status = status; row.triaged_by = S.analyst; await dbPut("sightings", row); toast(`${domain} → ${status.replace("_", " ")}`, "ok"); renderSightings(); refreshCounts(); }
   async function sightingDelete(domain) { await dbDel("sightings", domain); renderSightings(); refreshCounts(); }
@@ -903,7 +903,7 @@
     const sevFilter = $("alertSeverityFilter").value;
     const rows = all.filter((a) => (!statuses.length || statuses.includes(a.status)) && (!sevFilter || a.severity === sevFilter)).slice(0, 300);
     const tb = $("alertTable");
-    if (!rows.length) { tb.innerHTML = `<tr><td colspan="10"><div class="empty-state"><div class="ico">🚨</div><div class="title">No alerts</div><div class="sub">Scan a look-alike domain or let the live feed run</div></div></td></tr>`; return; }
+    if (!rows.length) { tb.innerHTML = `<tr><td colspan="10"><div class="empty-state"><div class="ico"></div><div class="title">No alerts</div><div class="sub">Scan a look-alike domain or let the live feed run</div></div></td></tr>`; return; }
     const badge = (s) => (s === "open" ? "high" : s === "investigating" ? "info" : s === "false_positive" ? "clean" : "low");
     if (window.alertSelectionChanged) setTimeout(alertSelectionChanged, 0);
     tb.innerHTML = rows.map((a) => `<tr data-alert="${esc(a.alert_id)}">
@@ -1012,7 +1012,7 @@
     if (!domain) { toast("Enter a domain", "crit"); return; }
     const btn = $("intelBtn"), panel = $("intelResult");
     btn.disabled = true; btn.textContent = "Working…";
-    panel.innerHTML = `<div class="card"><div class="scan-progress"><div class="scan-step running"><span class="step-ico">⏳</span><span>DoH · crt.sh · RDAP · URLhaus for ${esc(domain)}</span></div></div></div>`; panel.classList.add("show");
+    panel.innerHTML = `<div class="card"><div class="scan-progress"><div class="scan-step running"><span class="step-ico"></span><span>DoH · crt.sh · RDAP · URLhaus for ${esc(domain)}</span></div></div></div>`; panel.classList.add("show");
     try {
       const r = await investigate(domain);
       const v = r.verdict, rd = r.rdap;
@@ -1026,11 +1026,11 @@
           <dt>Nameservers</dt><dd class="wrap">${rd && rd.nameservers.length ? rd.nameservers.map(esc).join(", ") : "—"}</dd>
           <dt>URLhaus</dt><dd>${r.urlhaus.error ? "unavailable (" + esc(r.urlhaus.error) + ")" : r.urlhaus.listed ? `<span style="color:var(--red)">listed — ${r.urlhaus.url_count} URL(s)</span>` : "not listed"}</dd>
         </dl>
-        ${r.errors.length ? `<div style="margin-top:10px;font-size:.7rem;color:var(--orange)">⚠ ${esc(r.errors.join(" · "))}</div>` : ""}
-        <div style="display:flex;gap:8px;margin-top:12px"><button class="btn-sm" onclick="quickScan('${esc(domain)}')">🔍 Full scan</button><button class="btn-sm" onclick="$('ctInput').value='${esc(domain)}';showPage('ctlog');runCTLookup()">📜 CT history</button></div></div>`;
+        ${r.errors.length ? `<div style="margin-top:10px;font-size:.7rem;color:var(--orange)"> ${esc(r.errors.join(" · "))}</div>` : ""}
+        <div style="display:flex;gap:8px;margin-top:12px"><button class="btn-sm" onclick="quickScan('${esc(domain)}')"> Full scan</button><button class="btn-sm" onclick="$('ctInput').value='${esc(domain)}';showPage('ctlog');runCTLookup()"> CT history</button></div></div>`;
       renderIntelTable();
     } catch (e) { panel.innerHTML = `<div class="card" style="color:var(--red)">Investigation failed: ${esc(e.message)}</div>`; }
-    finally { btn.disabled = false; btn.textContent = "🧠 Investigate"; }
+    finally { btn.disabled = false; btn.textContent = " Investigate"; }
   }
   async function renderIntelTable() {
     const rows = (await dbAll("intel")).sort((a, b) => (b.ts > a.ts ? 1 : -1)).slice(0, 50);
@@ -1056,7 +1056,7 @@
     if (!q) return;
     const panel = $("ctResult"), btn = $("ctBtn");
     btn.disabled = true; panel.classList.add("show");
-    panel.innerHTML = `<div class="card"><div class="scan-step running"><span class="step-ico">⏳</span><span>Querying crt.sh for ${esc(q)}</span></div></div>`;
+    panel.innerHTML = `<div class="card"><div class="scan-step running"><span class="step-ico"></span><span>Querying crt.sh for ${esc(q)}</span></div></div>`;
     try {
       const certs = await fetchCrtSh(q);
       const issuers = {};
@@ -1074,7 +1074,7 @@
     const d = KCW.normalizeDomain($("dnsInput").value);
     if (!d) return;
     const panel = $("dnsResult"); panel.classList.add("show");
-    panel.innerHTML = `<div class="card"><div class="scan-step running"><span class="step-ico">⏳</span><span>Resolving ${esc(d)} via dns.google</span></div></div>`;
+    panel.innerHTML = `<div class="card"><div class="scan-step running"><span class="step-ico"></span><span>Resolving ${esc(d)} via dns.google</span></div></div>`;
     try {
       const recs = await dohAll(d);
       const lines = Object.entries(recs).flatMap(([t, rs]) => rs.map((r) => `<div class="record-line"><span class="record-type">${t}</span><span class="record-val">${esc(r.data)}</span><span class="record-ttl">TTL ${r.ttl}</span></div>`));
@@ -1085,7 +1085,7 @@
     const d = KCW.normalizeDomain($("rdapInput").value);
     if (!d) return;
     const panel = $("rdapResult"); panel.classList.add("show");
-    panel.innerHTML = `<div class="card"><div class="scan-step running"><span class="step-ico">⏳</span><span>RDAP lookup for ${esc(d)}</span></div></div>`;
+    panel.innerHTML = `<div class="card"><div class="scan-step running"><span class="step-ico"></span><span>RDAP lookup for ${esc(d)}</span></div></div>`;
     try {
       const raw = await fetchRDAP(d), rd = parseRDAP(raw);
       panel.innerHTML = `<div class="card"><div class="card-header"><span class="card-title">${esc(raw.ldhName || d)}</span><span class="card-sub">${rd.dnssec ? "DNSSEC signed" : "no DNSSEC"}</span></div>
@@ -1102,7 +1102,7 @@
     const scans = (await dbAll("scans")).sort((a, b) => (b.ts > a.ts ? 1 : -1));
     const tb = $("historyTable");
     tb.innerHTML = scans.length ? scans.slice(0, 500).map((s) => `<tr class="history-row" onclick="quickScan('${esc(s.domain)}')"><td style="font-family:var(--font-mono);font-size:.75rem">${esc(s.domain)}</td><td><span style="font-family:var(--font-mono);font-weight:700;color:${scoreColor(s.score)}">${Math.round(s.score)}</span></td><td><span class="badge ${esc(s.level)}">${esc(s.level)}</span></td><td style="font-size:.72rem">${esc((s.brands || []).join(", "))}</td><td>${(s.categories || []).slice(0, 3).map((c) => `<span class="badge info" style="margin:1px;font-size:.6rem">${esc(c)}</span>`).join("")}</td><td style="color:var(--text-dim);font-size:.7rem;font-family:var(--font-mono)">${fmtTime(s.ts)}</td></tr>`).join("")
-      : `<tr><td colspan="6"><div class="empty-state"><div class="ico">📚</div><div class="title">No scans yet</div></div></td></tr>`;
+      : `<tr><td colspan="6"><div class="empty-state"><div class="ico"></div><div class="title">No scans yet</div></div></td></tr>`;
   }
   async function clearHistory() { if (!confirm("Delete all scan history?")) return; await dbClear("scans"); renderHistory(); refreshCounts(); }
   async function exportHistoryJSON() { downloadJSON(await dbAll("scans"), "brandsentra_history.json"); }
@@ -1113,7 +1113,7 @@
     const alerts = await dbAll("alerts");
     const counts = {};
     alerts.forEach((a) => { counts[a.brand_name] = (counts[a.brand_name] || 0) + 1; });
-    $("brandTable").innerHTML = engine.brands.map((b) => `<tr><td><strong>${esc(b.name)}</strong></td><td style="font-family:var(--font-mono);font-size:.72rem">${esc(b.domains.join(", "))}</td><td style="font-size:.7rem;color:var(--text-dim)">${esc(b.alias_labels.slice(0, 4).join(", "))}${b.arabic_keywords.length ? ' <span style="color:var(--purple)">' + esc(b.arabic_keywords.slice(0, 2).join(" · ")) + "</span>" : ""}</td><td>${esc(b.industry)}</td><td><span class="badge ${esc(b.priority)}">${esc(b.priority)}</span></td><td style="font-family:var(--font-mono);font-weight:700;color:${counts[b.name] ? "var(--red)" : "var(--green)"}">${counts[b.name] || 0}</td><td><button class="act-btn" onclick="quickSquat('${esc(b.domains[0])}')">🧬 hunt</button></td></tr>`).join("");
+    $("brandTable").innerHTML = engine.brands.map((b) => `<tr><td><strong>${esc(b.name)}</strong></td><td style="font-family:var(--font-mono);font-size:.72rem">${esc(b.domains.join(", "))}</td><td style="font-size:.7rem;color:var(--text-dim)">${esc(b.alias_labels.slice(0, 4).join(", "))}${b.arabic_keywords.length ? ' <span style="color:var(--purple)">' + esc(b.arabic_keywords.slice(0, 2).join(" · ")) + "</span>" : ""}</td><td>${esc(b.industry)}</td><td><span class="badge ${esc(b.priority)}">${esc(b.priority)}</span></td><td style="font-family:var(--font-mono);font-weight:700;color:${counts[b.name] ? "var(--red)" : "var(--green)"}">${counts[b.name] || 0}</td><td><button class="act-btn" onclick="quickSquat('${esc(b.domains[0])}')"> hunt</button></td></tr>`).join("");
   }
   window.renderBrandTable = renderBrandTable;
 
@@ -1160,16 +1160,16 @@
   Object.assign(window, { renderNotifications, toggleNotifications, testNotification });
 
   function renderKeywords() {
-    $("keywordList").innerHTML = S.keywords.map((k) => `<span style="display:inline-block;padding:3px 10px;margin:3px;background:var(--cyan-glow);border:1px solid var(--cyan-dim);border-radius:99px;color:var(--cyan)">${esc(k)} <a href="#" onclick="removeKeyword('${esc(k)}');return false" style="color:var(--text-muted);margin-left:4px">✕</a></span>`).join("");
+    $("keywordList").innerHTML = S.keywords.map((k) => `<span style="display:inline-block;padding:3px 10px;margin:3px;background:var(--cyan-glow);border:1px solid var(--cyan-dim);border-radius:99px;color:var(--cyan)">${esc(k)} <a href="#" onclick="removeKeyword('${esc(k)}');return false" style="color:var(--text-muted);margin-left:4px">x</a></span>`).join("");
   }
   async function addKeyword() { const k = $("newKeyword").value.trim().toLowerCase(); if (!k || S.keywords.includes(k)) return; await saveSetting("keywords", S.keywords.concat([k])); $("newKeyword").value = ""; toast("Keyword added — applies to new certificates", "ok"); }
   async function removeKeyword(k) { await saveSetting("keywords", S.keywords.filter((x) => x !== k)); }
   async function resetKeywords() { await saveSetting("keywords", DEFAULTS.keywords.slice()); }
-  function renderAllowlist() { $("allowlistList").innerHTML = S.allowlist.length ? S.allowlist.map((d) => `<span style="display:inline-block;padding:3px 10px;margin:3px;background:rgba(0,230,118,.1);border:1px solid var(--green-dim);border-radius:99px;color:var(--green)">${esc(d)} <a href="#" onclick="removeAllowlistDomain('${esc(d)}');return false" style="color:var(--text-muted);margin-left:4px">✕</a></span>`).join("") : '<span style="color:var(--text-muted)">Empty — false positives you allowlist appear here.</span>'; }
+  function renderAllowlist() { $("allowlistList").innerHTML = S.allowlist.length ? S.allowlist.map((d) => `<span style="display:inline-block;padding:3px 10px;margin:3px;background:rgba(0,230,118,.1);border:1px solid var(--green-dim);border-radius:99px;color:var(--green)">${esc(d)} <a href="#" onclick="removeAllowlistDomain('${esc(d)}');return false" style="color:var(--text-muted);margin-left:4px">x</a></span>`).join("") : '<span style="color:var(--text-muted)">Empty — false positives you allowlist appear here.</span>'; }
   async function addAllowlist() { const d = KCW.normalizeDomain($("newAllow").value); if (!d) return; await addAllowlistDomain(d); $("newAllow").value = ""; }
   async function addAllowlistDomain(domain, quiet) { const d = KCW.normalizeDomain(domain); if (!d) return; if (!S.allowlist.includes(d)) await saveSetting("allowlist", S.allowlist.concat([d])); renderAllowlist(); if (!quiet) toast(d + " allowlisted", "ok"); refreshCounts(); }
   async function removeAllowlistDomain(d) { await saveSetting("allowlist", S.allowlist.filter((x) => x !== d)); renderAllowlist(); refreshCounts(); }
-  function renderCustomBrands() { $("customBrandList").innerHTML = S.customBrands.length ? S.customBrands.map((b, i) => `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span><strong>${esc(b.name)}</strong> <span style="color:var(--text-dim)">${esc(b.domains.join(", "))}</span> <span class="badge ${esc(b.priority)}">${esc(b.priority)}</span></span><button class="act-btn danger" onclick="removeCustomBrand(${i})">✕</button></div>`).join("") : '<span style="color:var(--text-muted)">No custom profiles.</span>'; }
+  function renderCustomBrands() { $("customBrandList").innerHTML = S.customBrands.length ? S.customBrands.map((b, i) => `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span><strong>${esc(b.name)}</strong> <span style="color:var(--text-dim)">${esc(b.domains.join(", "))}</span> <span class="badge ${esc(b.priority)}">${esc(b.priority)}</span></span><button class="act-btn danger" onclick="removeCustomBrand(${i})">x</button></div>`).join("") : '<span style="color:var(--text-muted)">No custom profiles.</span>'; }
   async function addCustomBrand() {
     const name = $("cbName").value.trim(), domains = $("cbDomains").value.split(",").map((s) => KCW.normalizeDomain(s)).filter(Boolean);
     if (!name || !domains.length) { toast("Name and at least one domain are required", "crit"); return; }
@@ -1195,7 +1195,7 @@
   function renderRules() {
     const el = $("ruleList");
     if (!el) return;
-    el.innerHTML = (S.rules || []).length ? S.rules.map((r, i) => `<div class="rule-row"><label class="toggle" style="margin:0;transform:scale(.8)"><input type="checkbox" ${r.enabled !== false ? "checked" : ""} onchange="toggleRule(${i},this.checked)"><span class="toggle-slider"></span></label><span class="badge ${esc(r.severity || "medium")}" style="font-size:.55rem">${esc(r.severity || "medium")}</span><strong style="font-size:.78rem">${esc(r.name)}</strong><code style="flex:1;font-size:.7rem;word-break:break-all">/${esc(r.pattern)}/${esc(r.flags || "i")}</code><button class="act-btn danger" onclick="removeRule(${i})">✕</button></div>`).join("")
+    el.innerHTML = (S.rules || []).length ? S.rules.map((r, i) => `<div class="rule-row"><label class="toggle" style="margin:0;transform:scale(.8)"><input type="checkbox" ${r.enabled !== false ? "checked" : ""} onchange="toggleRule(${i},this.checked)"><span class="toggle-slider"></span></label><span class="badge ${esc(r.severity || "medium")}" style="font-size:.55rem">${esc(r.severity || "medium")}</span><strong style="font-size:.78rem">${esc(r.name)}</strong><code style="flex:1;font-size:.7rem;word-break:break-all">/${esc(r.pattern)}/${esc(r.flags || "i")}</code><button class="act-btn danger" onclick="removeRule(${i})">x</button></div>`).join("")
       : '<div style="font-size:.74rem;color:var(--text-muted)">No custom rules yet. Rules are regular expressions tested against every certificate hostname in the live feed and every scanned domain.</div>';
   }
   async function addRule() {
@@ -1277,3 +1277,453 @@
     esc, ago, fmtTime, scoreColor, levelOf, setText, downloadBlob, emit, compileRules,
   };
 })();
+
+
+// ------------------------------------------------------------------ //
+// Framer Motion Navigation Modal Pages Handler
+// ------------------------------------------------------------------ //
+const NAV_TAB_TITLES = {
+  capabilities: 'Capabilities & Detection Engines',
+  how: 'How Protection Works (7-Step Workflow)',
+  experience: 'Protection Experience & Live Baseline',
+  roi: 'Brand Protection ROI Estimator',
+  solutions: 'Tailored Industry Solutions',
+  faq: 'Knowledge Base & DRP Documentation'
+};
+
+function openNavModal(tabId) {
+  tabId = tabId || 'capabilities';
+  const modal = document.getElementById('navPageModal');
+  if (!modal) return;
+  modal.classList.add('open');
+  switchNavModalTab(tabId);
+}
+
+function closeNavModal() {
+  const modal = document.getElementById('navPageModal');
+  if (modal) modal.classList.remove('open');
+}
+
+function switchNavModalTab(tabId) {
+  document.querySelectorAll('.framer-nav-tab').forEach(t => t.classList.remove('active'));
+  const activeBtn = document.getElementById('framerTab-' + tabId);
+  if (activeBtn) activeBtn.classList.add('active');
+  
+  const titleEl = document.getElementById('framerModalTitle');
+  if (titleEl) titleEl.textContent = NAV_TAB_TITLES[tabId] || 'Capabilities';
+  
+  const bodyEl = document.getElementById('framerTabBody');
+  if (bodyEl) {
+    bodyEl.innerHTML = renderNavModalContent(tabId);
+  }
+}
+
+function renderNavModalContent(tabId) {
+  if (tabId === 'capabilities') {
+    return `
+      <div style="display:grid;gap:24px;">
+        <div style="background:var(--bg-deep);padding:24px;border-radius:16px;border:1px solid var(--border);">
+          <div style="color:var(--cyan);font-family:var(--font-mono);font-size:0.75rem;text-transform:uppercase;margin-bottom:6px;">Multi-Layer Engine Suite</div>
+          <h3 style="font-size:1.4rem;font-weight:800;color:#fff;margin-bottom:12px;">Detect. Assess. Protect.</h3>
+          <p style="font-size:0.9rem;color:var(--text-dim);line-height:1.6;">
+            BrandSentra continuously monitors external threat surfaces using 4 proprietary browser-first detection modules, identifying brand impersonations before damage occurs.
+          </p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;">
+          <div style="padding:20px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;">
+            <div style="font-weight:700;font-size:1.05rem;color:#fff;margin-bottom:8px;">1. Direct CT Tailing</div>
+            <p style="font-size:0.8rem;color:var(--text-dim);line-height:1.5;">Browser-based RFC 6962 Certificate Transparency tailing parses millions of SSL certificates in real-time as they are issued.</p>
+          </div>
+          <div style="padding:20px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;">
+            <div style="font-weight:700;font-size:1.05rem;color:#fff;margin-bottom:8px;">2. Typosquat Hunter</div>
+            <p style="font-size:0.8rem;color:var(--text-dim);line-height:1.5;">Multilingual homoglyph and Levenshtein permutation generator with live resolution over encrypted DNS-over-HTTPS (DoH).</p>
+          </div>
+          <div style="padding:20px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;">
+            <div style="font-weight:700;font-size:1.05rem;color:#fff;margin-bottom:8px;">3. Real Enrichment</div>
+            <p style="font-size:0.8rem;color:var(--text-dim);line-height:1.5;">Direct historical lookups via crt.sh, RDAP registration WHOIS data, and URLhaus malware reputation feeds.</p>
+          </div>
+          <div style="padding:20px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;">
+            <div style="font-weight:700;font-size:1.05rem;color:#fff;margin-bottom:8px;">4. Alert Triage</div>
+            <p style="font-size:0.8rem;color:var(--text-dim);line-height:1.5;">Local IndexedDB lifecycle management with custom rules, allowlisting, CSV exports, and STIX 2.1 threat sharing.</p>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  if (tabId === 'how') {
+    return `
+      <div style="display:grid;gap:20px;">
+        <div style="color:var(--cyan);font-family:var(--font-mono);font-size:0.75rem;text-transform:uppercase;">Connected 7-Step Protection Journey</div>
+        <h3 style="font-size:1.3rem;font-weight:800;color:#fff;">From Baseline Registration to Platform Takedown</h3>
+        
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;">
+          <div style="padding:16px;background:var(--bg-deep);border:1px solid var(--border);border-radius:12px;">
+            <div style="font-family:var(--font-mono);font-size:0.75rem;color:var(--cyan);font-weight:700;">STEP 01</div>
+            <div style="font-weight:700;font-size:0.95rem;color:#fff;margin:4px 0;">Register Organization</div>
+            <p style="font-size:0.78rem;color:var(--text-dim);">Cryptographic workspace isolation guaranteeing tenant privacy.</p>
+          </div>
+          <div style="padding:16px;background:var(--bg-deep);border:1px solid var(--border);border-radius:12px;">
+            <div style="font-family:var(--font-mono);font-size:0.75rem;color:var(--cyan);font-weight:700;">STEP 02</div>
+            <div style="font-weight:700;font-size:0.95rem;color:#fff;margin:4px 0;">Establish Identity</div>
+            <p style="font-size:0.78rem;color:var(--text-dim);">Register authentic domains, handles, and mobile apps to exclude legitimate assets.</p>
+          </div>
+          <div style="padding:16px;background:var(--bg-deep);border:1px solid var(--border);border-radius:12px;">
+            <div style="font-family:var(--font-mono);font-size:0.75rem;color:var(--cyan);font-weight:700;">STEP 03</div>
+            <div style="font-weight:700;font-size:0.95rem;color:#fff;margin:4px 0;">Continuous Discovery</div>
+            <p style="font-size:0.78rem;color:var(--text-dim);">Real-time Certificate Transparency, app store, and domain registry scanning.</p>
+          </div>
+          <div style="padding:16px;background:var(--bg-deep);border:1px solid var(--border);border-radius:12px;">
+            <div style="font-family:var(--font-mono);font-size:0.75rem;color:var(--cyan);font-weight:700;">STEP 04</div>
+            <div style="font-weight:700;font-size:0.95rem;color:#fff;margin:4px 0;">Cross-Vector Scoring</div>
+            <p style="font-size:0.78rem;color:var(--text-dim);">Multi-factor priority matrix weighting logo pHash, age, and MX records.</p>
+          </div>
+          <div style="padding:16px;background:var(--bg-deep);border:1px solid var(--border);border-radius:12px;">
+            <div style="font-family:var(--font-mono);font-size:0.75rem;color:var(--cyan);font-weight:700;">STEP 05</div>
+            <div style="font-weight:700;font-size:0.95rem;color:#fff;margin:4px 0;">Evidence Findings</div>
+            <p style="font-size:0.78rem;color:var(--text-dim);">Preserve immutable cryptographic snapshots of deceptive pages.</p>
+          </div>
+          <div style="padding:16px;background:var(--bg-deep);border:1px solid var(--border);border-radius:12px;">
+            <div style="font-family:var(--font-mono);font-size:0.75rem;color:var(--cyan);font-weight:700;">STEP 06</div>
+            <div style="font-weight:700;font-size:0.95rem;color:#fff;margin:4px 0;">Follow Precautions</div>
+            <p style="font-size:0.78rem;color:var(--text-dim);">Generate DMCA notices and register missing regional handles to prevent recurrences.</p>
+          </div>
+          <div style="padding:16px;background:var(--bg-deep);border:1px solid var(--border);border-radius:12px;">
+            <div style="font-family:var(--font-mono);font-size:0.75rem;color:var(--cyan);font-weight:700;">STEP 07</div>
+            <div style="font-weight:700;font-size:0.95rem;color:#fff;margin:4px 0;">Track Investigations</div>
+            <p style="font-size:0.78rem;color:var(--text-dim);">Monitor takedown filings until host platforms confirm asset removal.</p>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  if (tabId === 'experience') {
+    return `
+      <div style="display:grid;gap:20px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;background:var(--bg-deep);padding:20px;border-radius:12px;border:1px solid var(--border);">
+          <div>
+            <div style="font-size:0.72rem;color:var(--text-muted);text-transform:uppercase;">Interactive Demo Experience</div>
+            <h3 style="font-size:1.2rem;font-weight:800;color:#fff;">NovaPay Global Baseline</h3>
+          </div>
+          <span style="font-size:0.75rem;padding:4px 12px;border-radius:99px;background:var(--cyan-glow);color:var(--cyan);font-weight:700;">Status: Active Protection</span>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
+          <div style="padding:16px;background:var(--bg-card);border-radius:8px;border:1px solid var(--border);">
+            <div style="font-size:0.7rem;color:var(--text-muted);">Completeness</div>
+            <div style="font-size:1.6rem;font-weight:800;color:var(--green);">94%</div>
+          </div>
+          <div style="padding:16px;background:var(--bg-card);border-radius:8px;border:1px solid var(--border);">
+            <div style="font-size:0.7rem;color:var(--text-muted);">Reviewed</div>
+            <div style="font-size:1.6rem;font-weight:800;color:#fff;">128</div>
+          </div>
+          <div style="padding:16px;background:var(--bg-card);border-radius:8px;border:1px solid var(--border);">
+            <div style="font-size:0.7rem;color:var(--text-muted);">Awaiting Review</div>
+            <div style="font-size:1.6rem;font-weight:800;color:var(--orange);">3</div>
+          </div>
+          <div style="padding:16px;background:var(--bg-card);border-radius:8px;border:1px solid var(--border);">
+            <div style="font-size:0.7rem;color:var(--text-muted);">Official Assets</div>
+            <div style="font-size:1.6rem;font-weight:800;color:var(--cyan);">14</div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  if (tabId === 'roi') {
+    return `
+      <div style="display:grid;gap:20px;">
+        <div style="background:var(--bg-deep);padding:20px;border-radius:12px;border:1px solid var(--border);">
+          <h3 style="font-size:1.2rem;font-weight:800;color:#fff;margin-bottom:8px;">Brand Protection Value Estimator</h3>
+          <p style="font-size:0.85rem;color:var(--text-dim);">Automated threat discovery prevents credential theft, phishing downtime, and manual investigation overhead.</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;">
+          <div style="padding:20px;background:var(--bg-card);border-radius:12px;border:1px solid var(--border);text-align:center;">
+            <div style="font-size:0.72rem;color:var(--text-muted);text-transform:uppercase;">Annual Losses Prevented</div>
+            <div style="font-size:2.2rem;font-weight:800;color:var(--cyan);margin:8px 0;">$240,000</div>
+            <div style="font-size:0.75rem;color:var(--text-dim);">Based on average phishing incident cost</div>
+          </div>
+          <div style="padding:20px;background:var(--bg-card);border-radius:12px;border:1px solid var(--border);text-align:center;">
+            <div style="font-size:0.72rem;color:var(--text-muted);text-transform:uppercase;">Analyst Hours Saved</div>
+            <div style="font-size:2.2rem;font-weight:800;color:var(--green);margin:8px 0;">1,450 hrs</div>
+            <div style="font-size:0.75rem;color:var(--text-dim);">Automated DoH & CT tailing triage</div>
+          </div>
+          <div style="padding:20px;background:var(--bg-card);border-radius:12px;border:1px solid var(--border);text-align:center;">
+            <div style="font-size:0.72rem;color:var(--text-muted);text-transform:uppercase;">Avg Takedown Speed</div>
+            <div style="font-size:2.2rem;font-weight:800;color:#aa95f9;margin:8px 0;">4.2 hrs</div>
+            <div style="font-size:0.75rem;color:var(--text-dim);">Standardized DMCA payload filing</div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  if (tabId === 'solutions') {
+    return `
+      <div style="display:grid;gap:20px;">
+        <div style="color:var(--cyan);font-family:var(--font-mono);font-size:0.75rem;text-transform:uppercase;">Tailored Industry Solutions</div>
+        <h3 style="font-size:1.3rem;font-weight:800;color:#fff;">Dedicated Protection Packs</h3>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;">
+          <div style="padding:20px;background:var(--bg-card);border-radius:12px;border:1px solid var(--border);">
+            <div style="font-weight:700;font-size:1.05rem;color:#fff;margin-bottom:8px;">Fintech & Banking</div>
+            <p style="font-size:0.8rem;color:var(--text-dim);line-height:1.5;">Defends mobile banking APK clones, credential harvesters, and fake support channels over Telegram and WhatsApp.</p>
+          </div>
+          <div style="padding:20px;background:var(--bg-card);border-radius:12px;border:1px solid var(--border);">
+            <div style="font-weight:700;font-size:1.05rem;color:#fff;margin-bottom:8px;">E-Commerce & Retail</div>
+            <p style="font-size:0.8rem;color:var(--text-dim);line-height:1.5;">Detects counterfeit store portals, fake discount gift card campaigns, and checkout domain squatting.</p>
+          </div>
+          <div style="padding:20px;background:var(--bg-card);border-radius:12px;border:1px solid var(--border);">
+            <div style="font-weight:700;font-size:1.05rem;color:#fff;margin-bottom:8px;">Healthcare & Pharma</div>
+            <p style="font-size:0.8rem;color:var(--text-dim);line-height:1.5;">Monitors unauthorized pharmacy storefronts, patient portal look-alikes, and HIPAA compliance threats.</p>
+          </div>
+          <div style="padding:20px;background:var(--bg-card);border-radius:12px;border:1px solid var(--border);">
+            <div style="font-weight:700;font-size:1.05rem;color:#fff;margin-bottom:8px;">SaaS & Enterprise</div>
+            <p style="font-size:0.8rem;color:var(--text-dim);line-height:1.5;">Prevents recruitment scams, corporate brand spoofing on social platforms, and executive impersonations.</p>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  if (tabId === 'faq') {
+    return `
+      <div style="display:grid;gap:18px;">
+        <div style="padding:18px;background:var(--bg-deep);border-radius:12px;border:1px solid var(--border);">
+          <div style="font-weight:700;font-size:1rem;color:#fff;margin-bottom:6px;">What is Certificate Transparency (RFC 6962) tailing?</div>
+          <p style="font-size:0.82rem;color:var(--text-dim);line-height:1.5;">Certificate Transparency is an open framework where Certificate Authorities log every newly issued SSL certificate. BrandSentra streams these logs directly in your browser, detecting look-alike domains the moment a TLS certificate is registered.</p>
+        </div>
+
+        <div style="padding:18px;background:var(--bg-deep);border-radius:12px;border:1px solid var(--border);">
+          <div style="font-weight:700;font-size:1rem;color:#fff;margin-bottom:6px;">How does homoglyph & IDN typosquatting work?</div>
+          <p style="font-size:0.82rem;color:var(--text-dim);line-height:1.5;">Attackers replace characters in your brand name with visually similar Unicode characters (e.g. replacing 'o' with Cyrillic 'о' or digit '0'). BrandSentra calculates confusable-character distances and resolves permutations live over DNS-over-HTTPS.</p>
+        </div>
+
+        <div style="padding:18px;background:var(--bg-deep);border-radius:12px;border:1px solid var(--border);">
+          <div style="font-weight:700;font-size:1rem;color:#fff;margin-bottom:6px;">What is STIX 2.1 export format?</div>
+          <p style="font-size:0.82rem;color:var(--text-dim);line-height:1.5;">Structured Threat Information Expression (STIX 2.1) is the international standard language for exchanging cyber threat intelligence. BrandSentra formats findings into compliant STIX bundles for seamless integration into SIEM and SOAR platforms.</p>
+        </div>
+      </div>
+    `;
+  }
+
+  return '';
+}
+
+Object.assign(window, { openNavModal, closeNavModal, switchNavModalTab });
+
+
+// ------------------------------------------------------------------ //
+// Interactive Home & Capabilities Features Implementation
+// ------------------------------------------------------------------ //
+
+// 1. Switch Capabilities Tab (Detect, Assess, Protect)
+function switchCapTab(tabName) {
+  const tabs = ['detect', 'assess', 'protect'];
+  tabs.forEach(t => {
+    const btn = document.getElementById('capTab' + t.charAt(0).toUpperCase() + t.slice(1));
+    const panel = document.getElementById('panel' + t.charAt(0).toUpperCase() + t.slice(1));
+    if (btn) btn.classList.toggle('active', t === tabName);
+    if (panel) panel.style.display = (t === tabName) ? 'block' : 'none';
+  });
+}
+
+// 2. Set Lookalike Preset & Update Gauge
+function setLookalikePreset(preset) {
+  const input = document.getElementById('laInput');
+  if (input) {
+    input.value = preset;
+    updateLookalikeDemo(preset);
+  }
+  document.querySelectorAll('.la-chip').forEach(c => {
+    c.classList.toggle('active', c.textContent.trim() === preset);
+  });
+}
+
+function updateLookalikeDemo(val) {
+  val = (val || '').trim();
+  const circle = document.getElementById('laGaugeCircle');
+  const valEl = document.getElementById('laGaugeVal');
+  const diffBox = document.getElementById('laDiffFormatted');
+  const tagsEl = document.getElementById('laTags');
+  if (!val) return;
+
+  // Simple heuristic distance score demo calculation
+  let score = 87;
+  if (val.includes('Refunds')) score = 94;
+  else if (val.includes('NovaPya')) score = 96;
+  else if (val.includes('help24')) score = 78;
+  else if (val.includes('Café')) score = 32;
+
+  if (valEl) valEl.textContent = score + '%';
+  if (circle) {
+    const offset = 314.15 * (1 - score / 100);
+    circle.style.strokeDashoffset = offset;
+    circle.style.stroke = score > 80 ? 'var(--red)' : score > 50 ? 'var(--orange)' : 'var(--green)';
+  }
+
+  if (diffBox) {
+    diffBox.innerHTML = `<span style="background:var(--ochre-wash);color:var(--yellow);padding:2px 4px;border-radius:4px">${esc(val.slice(0, 7))}</span> <span style="background:var(--copper-wash);color:var(--red);padding:2px 4px;border-radius:4px">${esc(val.slice(7) || '+Impersonation')}</span>`;
+  }
+
+  if (tagsEl) {
+    tagsEl.innerHTML = `
+      <span class="la-tag">Homoglyph / Character Similarity: ${score}%</span>
+      <span class="la-tag">Risk Priority: ${score > 80 ? 'Critical Escalate' : 'Candidate Review'}</span>
+    `;
+  }
+}
+
+// 3. 7-Step Workflow Selector
+const WORKFLOW_STEPS = {
+  1: {
+    title: "Register your organization",
+    body: "Create a workspace that keeps your records separate from every other client.",
+    detail: "Each organization is its own tenant. Its registry, findings, precautions and cases never mix with another organization's data, guaranteed through cryptographic compartmentalization."
+  },
+  2: {
+    title: "Establish Identity Baseline",
+    body: "Register authentic domains, handles, mobile apps, and authorized sub-brands.",
+    detail: "Official assets form your verified baseline. Incoming discovery signals are automatically checked against this reference to exclude legitimate regional sites and partners."
+  },
+  3: {
+    title: "Continuous Multi-Vector Discovery",
+    body: "Stream real-time Certificate Transparency, app store listings, and domain registrations.",
+    detail: "Our client-side tailing engine parses RFC 6962 SSL logs in real time, catching typosquatted domains the second a TLS certificate is issued."
+  },
+  4: {
+    title: "Cross-Vector Corroboration & Scoring",
+    body: "Weight lexical similarity against visual logo hashes, domain age, and MX mail servers.",
+    detail: "A similarity score alone never triggers a critical alert. Multi-factor corroboration evaluates whether an asset poses an active operational risk."
+  },
+  5: {
+    title: "Preserve Cryptographic Evidence",
+    body: "Snapshot deceptive pages with immutable timestamps and STIX 2.1 metadata.",
+    detail: "Full DOM snapshots, HTTP response headers, and perceptual logo hash comparisons are recorded for legal and abuse team submission."
+  },
+  6: {
+    title: "Follow Actionable Precautions",
+    body: "Generate DMCA takedown payloads and register missing regional handles.",
+    detail: "Pre-formatted legal takedown notices and proactive handle registrations prevent recurring impersonation attempts."
+  },
+  7: {
+    title: "Track Takedowns & Case Resolution",
+    body: "Monitor platform enforcement until host registrars confirm asset removal.",
+    detail: "Track enforcement lifecycles transparently from initial filing to confirmed platform takedown with full audit log trail."
+  }
+};
+
+function switchWorkflowStep(stepNum) {
+  for (let i = 1; i <= 7; i++) {
+    const btn = document.getElementById('wfBtn' + i);
+    if (btn) btn.classList.toggle('active', i === stepNum);
+  }
+
+  const step = WORKFLOW_STEPS[stepNum] || WORKFLOW_STEPS[1];
+  const numEl = document.getElementById('wfStepNum');
+  const titleEl = document.getElementById('wfStepTitle');
+  const bodyEl = document.getElementById('wfStepBody');
+  const detailEl = document.getElementById('wfStepDetail');
+
+  if (numEl) numEl.textContent = (stepNum < 10 ? '0' : '') + stepNum;
+  if (titleEl) titleEl.textContent = step.title;
+  if (bodyEl) bodyEl.textContent = step.body;
+  if (detailEl) detailEl.textContent = step.detail;
+}
+
+// 4. Replay Protect Steps Checklist
+function replayProtectSteps() {
+  const container = document.getElementById('protectChecklist');
+  if (!container) return;
+  const steps = container.querySelectorAll('.protect-step');
+  steps.forEach(s => s.classList.remove('done'));
+
+  steps.forEach((s, idx) => {
+    setTimeout(() => {
+      s.classList.add('done');
+    }, (idx + 1) * 350);
+  });
+}
+
+// 5. FAQ Accordion & Search
+function toggleFaq(el) {
+  const item = el.closest('.faq-item');
+  if (!item) return;
+  const isOpen = item.classList.contains('open');
+  item.classList.toggle('open', !isOpen);
+  const ico = item.querySelector('.faq-q-ico');
+  const ans = item.querySelector('.faq-a');
+  if (ico) ico.textContent = isOpen ? '+' : '-';
+  if (ans) ans.style.display = isOpen ? 'none' : 'block';
+}
+
+function filterFaq(cat, btnEl) {
+  document.querySelectorAll('.faq-cat-btn').forEach(b => b.classList.remove('active'));
+  if (btnEl) btnEl.classList.add('active');
+
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const itemCat = item.dataset.cat;
+    item.style.display = (cat === 'all' || itemCat === cat) ? 'block' : 'none';
+  });
+}
+
+function searchFaq(q) {
+  q = (q || '').toLowerCase().trim();
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const text = item.textContent.toLowerCase();
+    const tags = (item.dataset.tags || '').toLowerCase();
+    item.style.display = (!q || text.includes(q) || tags.includes(q)) ? 'block' : 'none';
+  });
+}
+
+// 6. SentraAI Assistant
+const AI_RESPONSES = {
+  confusables: "Confusable character detection evaluates Homoglyph substitutions across Latin, Cyrillic, Greek, and Arabic scripts. Attackers substitute visually identical codepoints (e.g. replacing 'o' with Cyrillic 'о'). BrandSentra calculates Levenshtein edit distance and resolves all IDN permutations live via DNS-over-HTTPS.",
+  takedowns: "When a bulletproof registrar ignores standard DMCA notices, BrandSentra automatically escalates upstream: filing abuse complaints directly with upstream transit providers, reporting malicious SSL certs to CA issuers (e.g., Let's Encrypt), and submitting domain block requests to Google Safe Browsing and Quad9 DNS.",
+  regional: "Authorized regional subsidiaries and partner handles are registered into your authenticated Identity Baseline. Pre-scoring whitelisting ensures legitimate partner accounts are excluded before priority calculations take place.",
+  default: "BrandSentra's client-side detection engine analyzes real-time Certificate Transparency logs (RFC 6962), confusable IDN metrics, and RDAP registration metadata to identify, score, and remediate brand impersonation threats before abuse occurs."
+};
+
+function askSentraAi(query) {
+  const input = document.getElementById('sentraAiInput');
+  const q = (query || (input ? input.value : '')).toLowerCase().trim();
+  const respEl = document.getElementById('sentraAiResponse');
+  const btn = document.getElementById('sentraAiBtn');
+  if (!respEl) return;
+
+  if (input && query) input.value = query;
+  respEl.style.display = 'block';
+  respEl.innerHTML = '<span style="color:var(--cyan);font-family:var(--font-mono)">SentraAI analyzing query...</span>';
+  if (btn) btn.disabled = true;
+
+  setTimeout(() => {
+    let key = 'default';
+    if (q.includes('confusable')) key = 'confusables';
+    else if (q.includes('takedown') || q.includes('registrar')) key = 'takedowns';
+    else if (q.includes('regional') || q.includes('false positive')) key = 'regional';
+
+    respEl.innerHTML = `<strong>SentraAI Insight:</strong> ${AI_RESPONSES[key]}`;
+    if (btn) btn.disabled = false;
+  }, 400);
+}
+
+// 7. Watchtower Action
+function runWatchtowerNow() {
+  if (window.toast) toast("Watchtower threat scan initiated for connected brand profiles", "ok");
+}
+
+Object.assign(window, {
+  switchCapTab,
+  setLookalikePreset,
+  updateLookalikeDemo,
+  switchWorkflowStep,
+  replayProtectSteps,
+  toggleFaq,
+  filterFaq,
+  searchFaq,
+  askSentraAi,
+  runWatchtowerNow
+});

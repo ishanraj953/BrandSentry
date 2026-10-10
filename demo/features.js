@@ -258,13 +258,13 @@
         <textarea class="note-box" id="drawerNotes" placeholder="Analyst notes — saved locally with the alert" onchange="saveAlertField('notes',this.value)" style="margin-top:8px">${esc(a.notes || "")}</textarea>
       </div>
       <div class="drawer-sec"><h4>Investigate</h4><div class="drawer-actions">
-        <button class="act-btn" onclick="closeDrawer();quickScan('${esc(a.domain)}')">🔍 Scan</button>
-        <button class="act-btn" onclick="closeDrawer();quickIntel('${esc(a.domain)}')">🧠 Intel</button>
-        <button class="act-btn" onclick="closeDrawer();quickSquat('${esc(protectedDomain || reg)}')">🧬 Hunt look-alikes</button>
+        <button class="act-btn" onclick="closeDrawer();quickScan('${esc(a.domain)}')"> Scan</button>
+        <button class="act-btn" onclick="closeDrawer();quickIntel('${esc(a.domain)}')"> Intel</button>
+        <button class="act-btn" onclick="closeDrawer();quickSquat('${esc(protectedDomain || reg)}')"> Hunt look-alikes</button>
         <button class="act-btn" onclick="copyIOC()">⧉ Copy IOC JSON</button>
         <button class="act-btn" onclick="alertStix()">↧ STIX 2.1</button>
-        <button class="act-btn" onclick="alertReport()">📄 Report (HTML)</button>
-        <button class="act-btn" onclick="window.print()">🖨 Print</button>
+        <button class="act-btn" onclick="alertReport()"> Report (HTML)</button>
+        <button class="act-btn" onclick="window.print()"> Print</button>
       </div></div>
       <div class="drawer-sec"><h4>Evidence</h4><dl class="kv-grid" style="grid-template-columns:140px 1fr">${evRows || "<dd>—</dd>"}</dl></div>
       ${related.scans.length ? `<div class="drawer-sec"><h4>Related scans</h4>${related.scans.map((s) => `<div style="display:flex;gap:8px;align-items:center;font-size:.75rem;padding:4px 0;border-bottom:1px dashed var(--border)"><span style="font-family:var(--font-mono);flex:1">${esc(s.domain)}</span><span style="font-family:var(--font-mono);font-weight:700;color:${scoreColor(s.score)}">${Math.round(s.score)}</span><span class="badge ${esc(s.level)}">${esc(s.level)}</span><span style="color:var(--text-muted)">${ago(s.ts)}</span></div>`).join("")}</div>` : ""}
