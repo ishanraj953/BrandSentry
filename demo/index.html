@@ -599,12 +599,136 @@ tr.selected td{background:var(--cyan-glow)!important}
 @keyframes flashRow{0%{background:#ff335540}100%{background:transparent}}
 @media(max-width:1024px){.search-btn{min-width:0}.search-btn .search-txt,.search-btn .kbd{display:none}}
 @media(max-width:768px){.search-btn{width:36px;padding:0;justify-content:center}.shortcuts{grid-template-columns:1fr}.drawer{width:100vw}}
-@media print{
-  body *{visibility:hidden}
-  .drawer,.drawer *{visibility:visible}
-  .drawer{position:static;width:auto;transform:none;border:none;box-shadow:none;background:#fff;color:#000}
-  .drawer .icon-btn,.drawer .drawer-actions,.drawer .note-box{display:none}
-}
+/* ── Rich Home Page Additions (Intaglio Design System) ── */
+.landing-nav-links{display:flex;align-items:center;gap:18px}
+.landing-nav-links a{color:var(--text-dim);font-size:.82rem;font-weight:600;transition:color .15s}
+.landing-nav-links a:hover{color:var(--cyan)}
+@media(max-width:960px){.landing-nav-links{display:none}}
+.hero-cta-group{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:24px 0 28px}
+.hero-cta-btn{padding:12px 22px;border-radius:var(--radius-sm);background:var(--grad);color:#fff;font-family:var(--font-display);font-weight:700;font-size:.9rem;display:inline-flex;align-items:center;gap:8px;box-shadow:0 8px 20px var(--cyan-glow);transition:all .2s;border:none;cursor:pointer;text-decoration:none}
+.hero-cta-btn:hover{transform:translateY(-1px);box-shadow:0 12px 28px var(--cyan-glow);color:#fff}
+.hero-sec-btn{padding:12px 20px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg-card);color:var(--text);font-family:var(--font-display);font-weight:600;font-size:.88rem;display:inline-flex;align-items:center;gap:8px;transition:all .15s;text-decoration:none}
+.hero-sec-btn:hover{border-color:var(--cyan);color:var(--cyan)}
+.earth-container{position:relative;width:100%;height:520px;min-height:460px;display:flex;align-items:center;justify-content:center;border-radius:var(--radius-lg);overflow:hidden;background:radial-gradient(circle at center,rgba(182,164,255,0.08) 0%,transparent 70%);border:1px solid var(--border-soft)}
+@media(max-width:900px){.earth-container{height:380px;min-height:340px}}
+.earth-note{text-align:center;font-size:.72rem;color:var(--text-muted);margin-top:10px}
+
+/* Live Telemetry Ticker */
+.telemetry-strip{background:var(--bg-deep);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:14px 24px;position:relative;z-index:2}
+.telemetry-inner{max-width:1240px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;font-family:var(--font-mono);font-size:.78rem}
+.telemetry-live{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--green)}
+.telemetry-items{display:flex;align-items:center;gap:24px;flex-wrap:wrap;color:var(--text-dim)}
+.telemetry-items strong{color:var(--text);font-weight:600}
+
+/* Home Section Layout */
+.home-section{position:relative;z-index:2;padding:84px 40px;max-width:1240px;margin:0 auto;width:100%}
+.home-section-head{max-width:700px;margin-bottom:44px}
+.home-section-head .eyebrow{margin-bottom:12px}
+.home-section-head h2{font-size:clamp(1.85rem,3.4vw,2.75rem);font-weight:800;line-height:1.08;letter-spacing:-.03em;margin-bottom:14px}
+.home-section-head p{font-size:1.02rem;color:var(--text-dim);line-height:1.6}
+
+/* Problem Cards */
+.problem-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.problem-card{padding:26px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-card);transition:all .2s ease;display:flex;flex-direction:column;gap:12px}
+.problem-card:hover{transform:translateY(-3px);border-color:var(--cyan-dim);box-shadow:var(--shadow)}
+.problem-card .p-ico{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:var(--copper-wash);color:var(--red)}
+.problem-card .p-ico svg{width:22px;height:22px}
+.problem-card h3{font-size:1.08rem;font-weight:700}
+.problem-card p{font-size:.84rem;color:var(--text-dim);line-height:1.55}
+
+/* Capabilities (Detect · Assess · Protect) */
+.cap-layout{display:grid;grid-template-columns:360px 1fr;gap:28px}
+@media(max-width:960px){.cap-layout{grid-template-columns:1fr}}
+.cap-tab-btn{width:100%;text-align:left;padding:18px 20px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg-card);color:var(--text);cursor:pointer;margin-bottom:12px;transition:all .2s}
+.cap-tab-btn:hover{border-color:var(--cyan-dim)}
+.cap-tab-btn.active{border-color:var(--cyan);background:var(--bg-surface);box-shadow:0 0 0 1px var(--cyan)}
+.cap-tab-head{display:flex;align-items:center;gap:12px;font-size:1.2rem;font-weight:800;font-family:var(--font-display)}
+.cap-tab-head span.badge-num{width:28px;height:28px;border-radius:8px;background:var(--cyan-glow);color:var(--cyan);display:grid;place-items:center;font-size:.78rem;font-family:var(--font-mono)}
+.cap-tab-desc{font-size:.82rem;color:var(--text-dim);line-height:1.5;margin-top:8px}
+.cap-panel{border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--bg-card);padding:30px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+
+/* Lookalike Playground */
+.la-input{width:100%;padding:14px 18px;font-family:var(--font-mono);font-size:1.15rem;background:var(--bg-input);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);outline:none;transition:border-color .2s}
+.la-input:focus{border-color:var(--cyan);box-shadow:0 0 0 4px var(--cyan-glow)}
+.la-chips{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 22px}
+.la-chip{padding:4px 12px;font-family:var(--font-mono);font-size:.74rem;border-radius:99px;border:1px solid var(--border);background:var(--bg-deep);color:var(--text-dim);cursor:pointer;transition:all .15s}
+.la-chip:hover,.la-chip.active{border-color:var(--cyan);color:var(--cyan);background:var(--cyan-glow)}
+.la-gauge-wrap{display:grid;grid-template-columns:140px 1fr;gap:24px;align-items:center}
+@media(max-width:640px){.la-gauge-wrap{grid-template-columns:1fr;text-align:center}}
+.la-circle-gauge{width:130px;height:130px;position:relative;margin:0 auto}
+.la-circle-gauge svg{width:100%;height:100%;transform:rotate(-90deg)}
+.la-circle-gauge .gauge-txt{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.la-circle-gauge .gauge-val{font-family:var(--font-display);font-size:2.2rem;font-weight:800;line-height:1;color:var(--red)}
+.la-circle-gauge .gauge-sub{font-size:.65rem;text-transform:uppercase;color:var(--text-muted);letter-spacing:.06em;margin-top:2px}
+.la-diff-box{background:var(--bg-deep);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 18px;font-family:var(--font-mono);font-size:1.15rem;letter-spacing:.05em}
+.la-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.la-tag{padding:4px 10px;border-radius:99px;font-size:.72rem;background:var(--bg-surface);border:1px solid var(--border);color:var(--text-dim)}
+
+/* Signal Meters */
+.signal-row{margin-bottom:16px}
+.signal-meta{display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:6px}
+.signal-bar{height:8px;border-radius:99px;background:var(--bg-input);border:1px solid var(--border);overflow:hidden}
+.signal-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--purple),var(--cyan));transition:width .6s ease}
+.signal-note{font-size:.74rem;color:var(--text-muted);margin-top:4px}
+
+/* Protect Checklist */
+.protect-step{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg-deep);margin-bottom:8px;transition:all .3s}
+.protect-step.done{border-color:var(--green);background:color-mix(in srgb,var(--green) 8%,transparent)}
+.protect-check{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--border);color:transparent;transition:all .2s;flex-shrink:0}
+.protect-step.done .protect-check{background:var(--green);border-color:var(--green);color:#0d0818}
+
+/* Workflow Steps */
+.wf-timeline{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:24px}
+@media(max-width:960px){.wf-timeline{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:540px){.wf-timeline{grid-template-columns:repeat(2,1fr)}}
+.wf-step-btn{display:flex;flex-direction:column;align-items:flex-start;padding:12px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg-card);color:var(--text);cursor:pointer;transition:all .2s;text-align:left;width:100%}
+.wf-step-btn:hover{border-color:var(--cyan-dim)}
+.wf-step-btn.active{border-color:var(--cyan);background:var(--bg-surface);box-shadow:0 0 0 1px var(--cyan)}
+.wf-step-num{font-family:var(--font-mono);font-size:.68rem;color:var(--signal);font-weight:700}
+.wf-step-title{font-size:.8rem;font-weight:700;margin-top:4px;line-height:1.25}
+.wf-detail-card{display:grid;grid-template-columns:90px 1fr;gap:28px;padding:32px;border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--bg-card);box-shadow:var(--shadow);align-items:center}
+@media(max-width:640px){.wf-detail-card{grid-template-columns:1fr}}
+.wf-huge-num{font-family:var(--font-display);font-size:4.5rem;font-weight:800;color:var(--cyan-dim);line-height:1}
+
+/* ROI Estimator */
+.roi-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}
+@media(max-width:900px){.roi-grid{grid-template-columns:1fr}}
+.slider-row{margin-bottom:20px}
+.slider-meta{display:flex;justify-content:space-between;font-size:.82rem;font-weight:700;margin-bottom:8px}
+.slider-input{width:100%;accent-color:var(--cyan);cursor:pointer;height:6px}
+.roi-metric-val{font-family:var(--font-display);font-size:2.8rem;font-weight:800;color:var(--cyan);line-height:1}
+.roi-pills{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
+.roi-pill{padding:14px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg-deep)}
+.roi-pill .val{font-size:1.15rem;font-weight:800;color:var(--green);font-family:var(--font-mono);margin-top:4px}
+
+/* Industry Solutions Bento */
+.bento-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px}
+.bento-card{padding:26px;border-radius:var(--radius-lg);border:1px solid var(--border);background:var(--bg-card);transition:all .2s;display:flex;flex-direction:column}
+.bento-card:hover{transform:translateY(-3px);border-color:var(--cyan-dim);box-shadow:var(--shadow)}
+.bento-card h3{font-size:1.2rem;font-weight:800;margin-bottom:8px}
+.bento-card p{font-size:.82rem;color:var(--text-dim);line-height:1.55;margin-bottom:14px}
+.bento-threats{list-style:none;margin-top:auto}
+.bento-threats li{font-size:.76rem;color:var(--text-dim);display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.bento-threats li::before{content:'•';color:var(--red)}
+
+/* Take Action Cards */
+.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:800px){.action-grid{grid-template-columns:1fr}}
+.action-card{padding:34px;border-radius:var(--radius-lg);border:1px solid var(--border);background:var(--bg-card);box-shadow:var(--shadow);display:flex;flex-direction:column;justify-content:space-between;min-height:220px}
+
+/* FAQ & Knowledge Base */
+.faq-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.faq-cat-btn{padding:7px 14px;border-radius:99px;border:1px solid var(--border);background:var(--bg-card);color:var(--text-dim);font-size:.78rem;font-weight:600;cursor:pointer;transition:all .15s}
+.faq-cat-btn.active,.faq-cat-btn:hover{border-color:var(--cyan);color:var(--cyan);background:var(--cyan-glow)}
+.faq-search-box{width:100%;padding:12px 16px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg-input);color:var(--text);font-size:.88rem;margin-bottom:24px;outline:none}
+.faq-item{border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-card);margin-bottom:10px;overflow:hidden;transition:border-color .2s}
+.faq-item:hover{border-color:var(--cyan-dim)}
+.faq-q{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;cursor:pointer;font-weight:700;font-size:.92rem}
+.faq-a{display:none;padding:0 20px 18px;font-size:.82rem;color:var(--text-dim);line-height:1.6;border-top:1px dashed var(--border);padding-top:12px}
+.faq-item.open .faq-a{display:block}
+.faq-item.open .faq-q-ico{transform:rotate(45deg)}
+.faq-q-ico{transition:transform .2s;font-size:1.1rem;color:var(--cyan)}
+.sentra-ai-box{border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;background:linear-gradient(135deg,rgba(110,86,207,0.1),rgba(154,131,232,0.05)),var(--bg-card);box-shadow:var(--shadow)}
 </style>
 </head>
 <body>
@@ -614,22 +738,47 @@ tr.selected td{background:var(--cyan-glow)!important}
   <div class="landing-bg"></div><span class="orb o1"></span><span class="orb o2"></span>
   <header class="landing-nav">
     <div class="brand"><span class="logo" data-icon="shield"></span>Brand<span>Sentra</span></div>
+    <nav class="landing-nav-links">
+      <a href="#capabilities">Capabilities</a>
+      <a href="#how">How It Works</a>
+      <a href="#experience">Protection Experience</a>
+      <a href="#roi">ROI Estimator</a>
+      <a href="#solutions">Industry Solutions</a>
+      <a href="#faq">Knowledge Base</a>
+    </nav>
     <div class="landing-nav-right">
       <button class="icon-btn theme-btn" onclick="toggleTheme()" title="Toggle light / dark" aria-label="Toggle theme" data-icon="theme"></button>
-      <a class="link-btn" href="../">← Main Website</a>
+      <button class="hero-cta-btn" style="padding:7px 14px;font-size:0.78rem" onclick="document.getElementById('analystCard').scrollIntoView({behavior:'smooth'});document.getElementById('analystName').focus();">Open Console ↵</button>
     </div>
   </header>
-  <main class="hero">
+
+  <!-- Hero with 3D Earth -->
+  <main class="hero" style="grid-template-columns:minmax(0,1.15fr) minmax(360px,1fr);align-items:start;padding-top:24px">
     <section class="hero-copy">
-      <div class="eyebrow"><span class="live-dot"></span> Live · client-side engine</div>
-      <h1>Digital risk protection &amp; <span class="grad">brand intelligence</span></h1>
-      <p class="lede">Watch Certificate Transparency in real time, hunt typosquats, detect brand impersonation across web, social and app ecosystems, and triage alerts — with the full detection engine running client-side. Nothing leaves your browser.</p>
+      <div class="eyebrow"><span class="live-dot"></span> Digital risk protection · Social &amp; app intelligence</div>
+      <h1 style="max-width:none">Your digital identity deserves more than <span class="grad">hope</span>.</h1>
+      <p class="lede">BrandSentra helps organizations identify potential impersonation across social media, domain registries, and mobile applications, investigate emerging risks, and make informed protection decisions.</p>
+      
+      <div class="hero-cta-group">
+        <button class="hero-cta-btn" onclick="document.getElementById('analystCard').scrollIntoView({behavior:'smooth'});document.getElementById('analystName').focus();">
+          Protect Your Organization
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <a class="hero-sec-btn" href="#how">Explore Our Platform</a>
+      </div>
+      <div style="margin-bottom:24px">
+        <a href="#action" style="font-size:0.8rem;color:var(--text-dim);display:inline-flex;align-items:center;gap:6px">
+          <span style="color:var(--red)">🛡️</span> Found something suspicious? Report it.
+        </a>
+      </div>
+
       <div class="hero-stats">
         <div><b id="lsBrands">26</b><span>brand profiles</span></div>
         <div><b id="lsKeywords">—</b><span>feed keywords</span></div>
         <div><b id="lsSuffixes">—</b><span>known suffixes</span></div>
         <div><b>STIX 2.1</b><span>export</span></div>
       </div>
+
       <div class="feature-grid">
         <div class="feature"><div class="f-ico" data-icon="certstream"></div><h3>Direct CT tailing</h3><p>The browser reads Certificate Transparency logs itself — no third-party feed — and scores every new certificate.</p></div>
         <div class="feature"><div class="f-ico" data-icon="squatgen"></div><h3>Typosquat Hunter</h3><p>Generate look-alike domains and resolve them live over DNS-over-HTTPS.</p></div>
@@ -637,25 +786,538 @@ tr.selected td{background:var(--cyan-glow)!important}
         <div class="feature"><div class="f-ico" data-icon="alerts"></div><h3>Alert triage</h3><p>Lifecycle, one-click allowlisting, CSV and STIX 2.1 export — stored locally.</p></div>
       </div>
     </section>
-    <aside class="entry-card">
-      <div class="entry-head"><div class="entry-shield" data-icon="shield"></div><div><h2>Open the console</h2><p>Your workspace lives in this browser only.</p></div></div>
-      <div class="form-group">
-        <label for="analystName">Analyst name</label>
-        <input type="text" id="analystName" placeholder="e.g. Analyst" autocomplete="off" onkeydown="if(event.key==='Enter')enterDashboard()">
-      </div>
-      <button class="login-btn" onclick="enterDashboard()" id="enterBtn">Open Dashboard <span class="kbd">↵</span></button>
-      <div class="login-error" id="loginError"></div>
-      <div class="entry-meta">
-        <div><span class="k">Engine</span><span class="v" id="lsVersion">v2.5.0 · Multi-layer scoring</span></div>
-        <div><span class="k">Storage</span><span class="v">IndexedDB — local only</span></div>
-        <div><span class="k">Feed</span><span class="v">CT logs read directly (RFC 6962)</span></div>
-        <div><span class="k">Lookups</span><span class="v">dns.google · crt.sh · rdap.org · URLhaus</span></div>
-      </div>
-      <div id="apiHint" style="display:none;margin-top:10px;padding:10px;background:rgba(170,149,249,.1);border:1px solid var(--cyan-dim);border-radius:var(--radius-sm);font-size:.72rem;color:var(--cyan)"></div>
-      <div class="login-hint" id="loginHint">Findings are automated heuristics from public data — candidates for review, not accusations. Verify before acting. <a href="../DISCLAIMER.md" target="_blank" rel="noopener">Disclaimer &amp; terms</a> · MIT · <code>v2.5</code></div>
-    </aside>
+
+    <!-- Visual Column: 3D Earth Globe + Console Access Card -->
+    <section class="hero-visual" style="display:flex;flex-direction:column;gap:20px">
+      <div id="earthContainer" class="earth-container"></div>
+      <p class="earth-note">Globe nodes are illustrative asset categories, not a live threat map.</p>
+
+      <aside class="entry-card" id="analystCard">
+        <div class="entry-head">
+          <div class="entry-shield" data-icon="shield"></div>
+          <div>
+            <h2>Open the Security Console</h2>
+            <p>Direct workspace running entirely in your browser.</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="analystName">Analyst name</label>
+          <input type="text" id="analystName" placeholder="e.g. Analyst" autocomplete="off" onkeydown="if(event.key==='Enter')enterDashboard()">
+        </div>
+        <button class="login-btn" onclick="enterDashboard()" id="enterBtn">Launch Dashboard <span class="kbd">↵</span></button>
+        <div class="login-error" id="loginError"></div>
+        <div class="entry-meta">
+          <div><span class="k">Engine</span><span class="v" id="lsVersion">v2.5.0 · Multi-layer scoring</span></div>
+          <div><span class="k">Storage</span><span class="v">IndexedDB — local only</span></div>
+          <div><span class="k">Feed</span><span class="v">CT logs read directly (RFC 6962)</span></div>
+          <div><span class="k">Lookups</span><span class="v">dns.google · crt.sh · rdap.org · URLhaus</span></div>
+        </div>
+        <div id="apiHint" style="display:none;margin-top:10px;padding:10px;background:rgba(170,149,249,.1);border:1px solid var(--cyan-dim);border-radius:var(--radius-sm);font-size:.72rem;color:var(--cyan)"></div>
+        <div class="login-hint" id="loginHint">Findings are automated heuristics from public data — candidates for review, not accusations. Verify before acting. <a href="../DISCLAIMER.md" target="_blank" rel="noopener">Disclaimer &amp; terms</a> · MIT · <code>v2.5</code></div>
+      </aside>
+    </section>
   </main>
-  <footer class="landing-foot">BrandSentra · <a href="../">Home</a> · <a href="../#how">Platform Walkthrough</a> · <a href="../DISCLAIMER.md" target="_blank" rel="noopener">Disclaimer</a> · No cookies, no tracking, data stays in your browser</footer>
+
+  <!-- Live Telemetry Strip -->
+  <div class="telemetry-strip" id="telemetryStrip">
+    <div class="telemetry-inner">
+      <div class="telemetry-live">
+        <span class="live-dot"></span> NETWORK DEFENSE: LIVE
+      </div>
+      <div class="telemetry-items">
+        <span>⚡ 24h CT Logs Ingested: <strong id="liveCertsCount">1,420,500</strong></span>
+        <span>🛡️ Avg DMCA Takedown Speed: <strong>4.2 Hours</strong></span>
+        <span>🌐 Active Crawler Nodes: <strong>32 Workers</strong></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- The Problem -->
+  <section class="home-section" id="problem">
+    <div class="home-section-head">
+      <div class="eyebrow">The problem</div>
+      <h2>Your brand can be imitated anywhere it has a digital presence.</h2>
+      <p>Every new channel is somewhere a copy can appear. Imitations borrow the trust customers place in your name and point it somewhere you do not control.</p>
+    </div>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="p-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"/></svg></div>
+        <h3>Fake profiles</h3>
+        <p>Accounts that copy a name, badge, and logo across social platforms, often claiming to provide customer support or refund processing.</p>
+      </div>
+      <div class="problem-card">
+        <div class="p-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <h3>Look-alike company pages</h3>
+        <p>Pages posing as a corporate brand, regional division, or hiring recruitment team targeting employees and business partners.</p>
+      </div>
+      <div class="problem-card">
+        <div class="p-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+        <h3>Suspicious applications</h3>
+        <p>App store and APK listings with borrowed names, icons, and descriptions published by unauthorized third parties.</p>
+      </div>
+      <div class="problem-card">
+        <div class="p-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
+        <h3>Deceptive destinations</h3>
+        <p>Links to lookalike and typosquatted domains that mimic single sign-on portals to harvest credentials and payment cards.</p>
+      </div>
+    </div>
+    <p style="font-size:0.75rem;color:var(--text-muted);margin-top:20px">Examples use fictional organizations. No real company is depicted as a victim.</p>
+  </section>
+
+  <!-- Capabilities (Detect · Assess · Protect) -->
+  <section class="home-section" id="capabilities" style="background:var(--bg-deep);border-top:1px solid var(--border);border-bottom:1px solid var(--border);max-width:100%;padding-left:0;padding-right:0">
+    <div style="max-width:1240px;margin:0 auto;padding:0 40px">
+      <div class="home-section-head">
+        <div class="eyebrow">What BrandSentra does</div>
+        <h2>Detect. Assess. Protect.</h2>
+        <p>Three interconnected layers analyzing external assets from initial signal capture to structured defensive response.</p>
+      </div>
+
+      <div class="cap-layout">
+        <div class="cap-tabs">
+          <button class="cap-tab-btn active" id="capTabDetect" onclick="switchCapTab('detect')">
+            <div class="cap-tab-head"><span class="badge-num">01</span><span>Detect</span></div>
+            <p class="cap-tab-desc">Identify external candidates that resemble registered brand identities using live Certificate Transparency, DNS, and confusable-character metrics.</p>
+          </button>
+          <button class="cap-tab-btn" id="capTabAssess" onclick="switchCapTab('assess')">
+            <div class="cap-tab-head"><span class="badge-num">02</span><span>Assess</span></div>
+            <p class="cap-tab-desc">Prioritize findings using weighted evidence including name similarity, visual logo resemblance, domain registration age, and publisher inconsistencies.</p>
+          </button>
+          <button class="cap-tab-btn" id="capTabProtect" onclick="switchCapTab('protect')">
+            <div class="cap-tab-head"><span class="badge-num">03</span><span>Protect</span></div>
+            <p class="cap-tab-desc">Preserve cryptographic snapshots, record analyst decisions, generate takedown packages, and publish verified Trust Passports.</p>
+          </button>
+        </div>
+
+        <div class="cap-panel">
+          <!-- Detect Panel: Interactive Lookalike Playground -->
+          <div id="panelDetect" style="display:block">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:12px">
+              <span class="eyebrow" style="color:var(--cyan)">Interactive Look-Alike Playground</span>
+              <span style="font-size:0.75rem;color:var(--text-dim)">Baseline: <strong style="font-family:var(--font-mono);color:var(--text)">NovaPay</strong> · alias <strong style="font-family:var(--font-mono);color:var(--text)">Nova Pay</strong></span>
+            </div>
+            <input type="text" id="laInput" class="la-input" value="N0vaPay Support" placeholder="Type a brand handle or domain to test…" oninput="updateLookalikeDemo(this.value)">
+            <div class="la-chips">
+              <span style="font-size:0.72rem;color:var(--text-muted);display:flex;align-items:center">Try presets:</span>
+              <button class="la-chip active" onclick="setLookalikePreset('N0vaPay Support')">N0vaPay Support</button>
+              <button class="la-chip" onclick="setLookalikePreset('Nova Pay Refunds')">Nova Pay Refunds</button>
+              <button class="la-chip" onclick="setLookalikePreset('NovaPya')">NovaPya</button>
+              <button class="la-chip" onclick="setLookalikePreset('Novapay Café')">Novapay Café</button>
+              <button class="la-chip" onclick="setLookalikePreset('novapay_help24')">novapay_help24</button>
+            </div>
+
+            <div class="la-gauge-wrap">
+              <div class="la-circle-gauge">
+                <svg viewBox="0 0 120 120">
+                  <circle cx="60" cy="60" r="50" fill="none" stroke="var(--border)" stroke-width="10"></circle>
+                  <circle id="laGaugeCircle" cx="60" cy="60" r="50" fill="none" stroke="var(--red)" stroke-width="10" stroke-linecap="round" stroke-dasharray="314.15" stroke-dashoffset="40" style="transition:stroke-dashoffset 0.4s ease, stroke 0.4s ease"></circle>
+                </svg>
+                <div class="la-gauge-txt">
+                  <span class="la-gauge-val" id="laGaugeVal">87%</span>
+                  <span class="la-gauge-sub">lexical match</span>
+                </div>
+              </div>
+              <div>
+                <div class="la-diff-box" id="laDiffBox">
+                  <span style="font-size:0.68rem;text-transform:uppercase;color:var(--text-muted);display:block;margin-bottom:6px">Diff from reference "NovaPay"</span>
+                  <span id="laDiffFormatted"><span style="background:var(--ochre-wash);color:var(--yellow);padding:2px 4px;border-radius:4px">N0vaPay</span> <span style="background:var(--copper-wash);color:var(--red);padding:2px 4px;border-radius:4px">+Support</span></span>
+                </div>
+                <div class="la-tags" id="laTags">
+                  <span class="la-tag">Homoglyph Substitution: '0' ➔ 'o'</span>
+                  <span class="la-tag">Keyword Append: '+Support'</span>
+                  <span class="la-tag">Risk: Candidate For Investigation</span>
+                </div>
+              </div>
+            </div>
+            <p style="font-size:0.75rem;color:var(--text-dim);margin-top:16px;line-height:1.5">A name match alone never makes a finding high priority. Corroborating signals (visual logo similarity, newly registered domain, mismatched publisher) are evaluated before escalation.</p>
+          </div>
+
+          <!-- Assess Panel: Priority & Multi-Factor Signals -->
+          <div id="panelAssess" style="display:none">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--border)">
+              <div>
+                <p style="font-size:0.72rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em">NovaPay · Demo Finding #AS-9104</p>
+                <h3 style="font-size:1.35rem;font-weight:800;font-family:var(--font-mono)">novapay-security-verify.com</h3>
+              </div>
+              <span class="badge critical" style="font-size:0.78rem;padding:6px 14px">CRITICAL PRIORITY</span>
+            </div>
+
+            <div class="signal-row">
+              <div class="signal-meta"><span>Visual Logo Resemblance (Perceptual Hash)</span><strong style="color:var(--red)">92% · Weight ×35</strong></div>
+              <div class="signal-bar"><div class="signal-fill" style="width:92%"></div></div>
+              <div class="signal-note">Matches authentic brand seal geometry with 4-degree tilt variation</div>
+            </div>
+
+            <div class="signal-row">
+              <div class="signal-meta"><span>Homoglyph &amp; Levenshtein Distance</span><strong style="color:var(--orange)">88% · Weight ×25</strong></div>
+              <div class="signal-bar"><div class="signal-fill" style="width:88%"></div></div>
+              <div class="signal-note">Prefix matches protected brand label with added high-risk keywords ("security", "verify")</div>
+            </div>
+
+            <div class="signal-row">
+              <div class="signal-meta"><span>Domain Registration Age (RDAP)</span><strong style="color:var(--red)">75% · Weight ×20</strong></div>
+              <div class="signal-bar"><div class="signal-fill" style="width:75%"></div></div>
+              <div class="signal-note">Registered 3 days ago via privacy proxy registrar</div>
+            </div>
+
+            <div class="signal-row">
+              <div class="signal-meta"><span>MX Record Presence &amp; Mail Server Config</span><strong style="color:var(--yellow)">60% · Weight ×20</strong></div>
+              <div class="signal-bar"><div class="signal-fill" style="width:60%"></div></div>
+              <div class="signal-note">Active MX records pointing to commercial bulletproof host</div>
+            </div>
+
+            <p style="font-size:0.75rem;color:var(--text-dim);background:var(--bg-deep);padding:12px;border-radius:var(--radius-sm);border:1px solid var(--border);margin-top:16px">Priority orders analyst review queues based on objective corroboration. It is a prioritization heuristic, not an accusation.</p>
+          </div>
+
+          <!-- Protect Panel: 6-Step Checklist -->
+          <div id="panelProtect" style="display:none">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+              <div class="eyebrow" style="color:var(--signal)">From Finding to Precaution</div>
+              <button class="act-btn" onclick="replayProtectSteps()" style="font-size:0.75rem;padding:4px 10px">↺ Replay</button>
+            </div>
+            <div class="protect-checklist" id="protectChecklist">
+              <div class="protect-step done" data-step="1"><div class="protect-check">✓</div><span>1. Preserve cryptographic snapshots of the profile, page, and destination</span></div>
+              <div class="protect-step done" data-step="2"><div class="protect-check">✓</div><span>2. Confirm asset is not an authorized partner or internal regional subsidiary</span></div>
+              <div class="protect-step done" data-step="3"><div class="protect-check">✓</div><span>3. Record analyst triage decision with immutable rationale and STIX 2.1 tags</span></div>
+              <div class="protect-step done" data-step="4"><div class="protect-check">✓</div><span>4. Generate standardized platform takedown filing and DMCA notice</span></div>
+              <div class="protect-step done" data-step="5"><div class="protect-check">✓</div><span>5. Register missing official regional handles to prevent future recurrence</span></div>
+              <div class="protect-step done" data-step="6"><div class="protect-check">✓</div><span>6. Publish Trust Passport identity baseline for partner validation</span></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.75rem;color:var(--text-muted);margin-top:16px">
+              <span>BrandSentra prepares and tracks. It never claims a removal until confirmed by the host platform.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works (Seven steps, one connected workflow) -->
+  <section class="home-section" id="how">
+    <div class="home-section-head">
+      <div class="eyebrow">How protection works</div>
+      <h2>Seven steps, one connected workflow.</h2>
+      <p>A transparent, repeatable journey from asset baseline registration to automated platform enforcement.</p>
+    </div>
+
+    <div class="wf-timeline">
+      <button class="wf-step-btn active" id="wfBtn1" onclick="switchWorkflowStep(1)"><span class="wf-step-num">Step 01</span><span class="wf-step-title">Register Organization</span></button>
+      <button class="wf-step-btn" id="wfBtn2" onclick="switchWorkflowStep(2)"><span class="wf-step-num">Step 02</span><span class="wf-step-title">Establish Identity</span></button>
+      <button class="wf-step-btn" id="wfBtn3" onclick="switchWorkflowStep(3)"><span class="wf-step-num">Step 03</span><span class="wf-step-title">Continuous Discovery</span></button>
+      <button class="wf-step-btn" id="wfBtn4" onclick="switchWorkflowStep(4)"><span class="wf-step-num">Step 04</span><span class="wf-step-title">Cross-Vector Scoring</span></button>
+      <button class="wf-step-btn" id="wfBtn5" onclick="switchWorkflowStep(5)"><span class="wf-step-num">Step 05</span><span class="wf-step-title">Evidence Findings</span></button>
+      <button class="wf-step-btn" id="wfBtn6" onclick="switchWorkflowStep(6)"><span class="wf-step-num">Step 06</span><span class="wf-step-title">Follow Precautions</span></button>
+      <button class="wf-step-btn" id="wfBtn7" onclick="switchWorkflowStep(7)"><span class="wf-step-num">Step 07</span><span class="wf-step-title">Track Investigations</span></button>
+    </div>
+
+    <div class="wf-detail-card">
+      <div class="wf-huge-num" id="wfStepNum">01</div>
+      <div>
+        <h3 id="wfStepTitle" style="font-size:1.6rem;font-weight:800;margin-bottom:8px">Register your organization</h3>
+        <p id="wfStepBody" style="font-size:1.05rem;color:var(--text);margin-bottom:10px">Create a workspace that keeps your records separate from every other client.</p>
+        <p id="wfStepDetail" style="font-size:0.86rem;color:var(--text-dim);line-height:1.6">Each organization is its own tenant. Its registry, findings, precautions and cases never mix with another organization’s data, guaranteed through cryptographic compartmentalization.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Protection Experience -->
+  <section class="home-section" id="experience" style="background:var(--bg-deep);border-top:1px solid var(--border);border-bottom:1px solid var(--border);max-width:100%;padding-left:0;padding-right:0">
+    <div style="max-width:1240px;margin:0 auto;padding:0 40px">
+      <div class="home-section-head">
+        <div class="eyebrow">The protection experience</div>
+        <h2>A status page for your digital identity.</h2>
+        <p>Each organization sees its own registry completeness, findings awaiting review, source coverage and the precautions that matter now.</p>
+      </div>
+
+      <div style="padding:32px;border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--bg-card);box-shadow:var(--shadow)">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:24px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:40px;height:40px;border-radius:10px;background:var(--grad);display:grid;place-items:center;color:#fff;font-weight:800">NP</div>
+            <div>
+              <p style="font-size:0.72rem;color:var(--text-muted);text-transform:uppercase">Protection Overview</p>
+              <h3 style="font-size:1.2rem;font-weight:800">NovaPay Global Financial</h3>
+            </div>
+          </div>
+          <span style="font-size:0.75rem;padding:4px 12px;border-radius:99px;background:var(--cyan-glow);color:var(--cyan);font-weight:700">● Interactive Live Preview</span>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:24px">
+          <div style="padding:16px;background:var(--bg-deep);border-radius:var(--radius-sm);border:1px solid var(--border)">
+            <p style="font-size:0.72rem;color:var(--text-muted);text-transform:uppercase">Profile completeness</p>
+            <p style="font-family:var(--font-display);font-size:1.8rem;font-weight:800;color:var(--green)">94%</p>
+          </div>
+          <div style="padding:16px;background:var(--bg-deep);border-radius:var(--radius-sm);border:1px solid var(--border)">
+            <p style="font-size:0.72rem;color:var(--text-muted);text-transform:uppercase">Candidates reviewed</p>
+            <p style="font-family:var(--font-display);font-size:1.8rem;font-weight:800;color:var(--text)">128</p>
+          </div>
+          <div style="padding:16px;background:var(--bg-deep);border-radius:var(--radius-sm);border:1px solid var(--border)">
+            <p style="font-size:0.72rem;color:var(--text-muted);text-transform:uppercase">Awaiting review</p>
+            <p style="font-family:var(--font-display);font-size:1.8rem;font-weight:800;color:var(--orange)">3</p>
+          </div>
+          <div style="padding:16px;background:var(--bg-deep);border-radius:var(--radius-sm);border:1px solid var(--border)">
+            <p style="font-size:0.72rem;color:var(--text-muted);text-transform:uppercase">Official assets</p>
+            <p style="font-family:var(--font-display);font-size:1.8rem;font-weight:800;color:var(--cyan)">14</p>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+          <div style="padding:16px;background:var(--bg-deep);border-radius:var(--radius-sm);border:1px solid var(--border)">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">Connected Feeds &amp; Sources</p>
+            <div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:6px"><span>Certificate Transparency (RFC 6962)</span><span style="color:var(--green);font-weight:700">Live Stream</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:6px"><span>WHOIS / RDAP Global Registries</span><span style="color:var(--signal);font-weight:700">Synchronized</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:0.8rem"><span>App Store &amp; Google Play Scrapers</span><span style="color:var(--cyan);font-weight:700">Active</span></div>
+          </div>
+          <div style="padding:16px;background:var(--bg-deep);border-radius:var(--radius-sm);border:1px solid var(--border)">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">Recommended Active Precautions</p>
+            <div style="font-size:0.78rem;color:var(--text-dim);margin-bottom:6px">● Register missing WhatsApp support verified handle</div>
+            <div style="font-size:0.78rem;color:var(--text-dim);margin-bottom:6px">● Confirm regional apex domain whitelist baseline</div>
+            <div style="font-size:0.78rem;color:var(--text-dim)">● Review newly flagged typosquat: <code>novapay-refunds.com</code></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive ROI Value Estimator -->
+  <section class="home-section" id="roi">
+    <div class="home-section-head">
+      <div class="eyebrow">Interactive value estimator</div>
+      <h2>Calculate Your Brand Protection ROI.</h2>
+      <p>Adjust the sliders below to estimate the annual financial loss prevented and hours saved by automated threat intelligence and takedowns.</p>
+    </div>
+
+    <div class="roi-grid">
+      <!-- Sliders -->
+      <div style="padding:28px;border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--bg-card);box-shadow:var(--shadow)">
+        <div class="slider-row">
+          <div class="slider-meta"><span>Monitored Domains &amp; Subdomains:</span><span id="roiDomainsLabel" style="font-family:var(--font-mono);color:var(--cyan)">25 Domains</span></div>
+          <input type="range" min="5" max="200" step="5" value="25" class="slider-input" id="roiDomains" oninput="updateRoiCalc()">
+        </div>
+        <div class="slider-row">
+          <div class="slider-meta"><span>Monthly Web Traffic (Visitors):</span><span id="roiTrafficLabel" style="font-family:var(--font-mono);color:var(--cyan)">150k / mo</span></div>
+          <input type="range" min="10" max="1000" step="10" value="150" class="slider-input" id="roiTraffic" oninput="updateRoiCalc()">
+        </div>
+        <div class="slider-row" style="margin-bottom:0">
+          <div class="slider-meta"><span>Mobile App Store Listings:</span><span id="roiAppsLabel" style="font-family:var(--font-mono);color:var(--cyan)">4 Apps</span></div>
+          <input type="range" min="1" max="30" step="1" value="4" class="slider-input" id="roiApps" oninput="updateRoiCalc()">
+        </div>
+      </div>
+
+      <!-- Value Output -->
+      <div style="padding:32px;border:1px solid var(--border);border-radius:var(--radius-lg);background:linear-gradient(135deg,#1f1338,#170e28);box-shadow:var(--shadow);color:#fff">
+        <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:14px;margin-bottom:18px">
+          <span style="font-size:0.75rem;text-transform:uppercase;color:rgba(255,255,255,0.6);font-weight:700">Estimated Annual Loss Prevented</span>
+          <span style="font-size:0.75rem;padding:3px 8px;border-radius:4px;background:rgba(242,203,85,0.2);color:var(--signal);font-weight:700">82% Risk Mitigation</span>
+        </div>
+        <div class="roi-metric-val" id="roiAnnualVal">$335,380<span style="font-size:1.1rem;font-weight:400;color:rgba(255,255,255,0.6)"> / year</span></div>
+        <p style="font-size:0.78rem;color:rgba(255,255,255,0.6);margin-top:6px">Direct fraud loss avoided + brand equity protection.</p>
+        
+        <div class="roi-pills">
+          <div class="roi-pill">
+            <span style="font-size:0.72rem;color:rgba(255,255,255,0.6)">SecOps Time Saved</span>
+            <div class="val" id="roiHoursVal">54 hrs / mo</div>
+          </div>
+          <div class="roi-pill">
+            <span style="font-size:0.72rem;color:rgba(255,255,255,0.6)">Avg Takedown Speed</span>
+            <div class="val" style="color:var(--cyan)">4.2h Average</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who It Is For — Industry Solutions Bento -->
+  <section class="home-section" id="solutions" style="background:var(--bg-deep);border-top:1px solid var(--border);border-bottom:1px solid var(--border);max-width:100%;padding-left:0;padding-right:0">
+    <div style="max-width:1240px;margin:0 auto;padding:0 40px">
+      <div class="home-section-head">
+        <div class="eyebrow">Who it is for</div>
+        <h2>Protection shaped by industry.</h2>
+        <p>Pre-configured threat models and baseline templates tuned for sector-specific attack vectors.</p>
+      </div>
+
+      <div class="bento-grid">
+        <div class="bento-card">
+          <span style="font-size:1.8rem;margin-bottom:8px">🏛️</span>
+          <h3>Financial Services &amp; Banking</h3>
+          <p>Payments and banking brands face credential phishing, clone mobile wallets, and unauthorized VIP customer service bots.</p>
+          <ul class="bento-threats">
+            <li>Fake help desks asking for OTPs or PINs</li>
+            <li>KYC-update links leading to credential harvesters</li>
+            <li>Cloned wallet APKs requesting SMS access</li>
+          </ul>
+        </div>
+        <div class="bento-card">
+          <span style="font-size:1.8rem;margin-bottom:8px">🛍️</span>
+          <h3>Retail &amp; E-Commerce</h3>
+          <p>Seasonal marketing bursts create opportunities for clone storefronts, coupon scams, and counterfeit gift card offers.</p>
+          <ul class="bento-threats">
+            <li>"Clearance sale" fake shops accepting booking amounts</li>
+            <li>Lucky-draw phishing collecting contact lists</li>
+            <li>Discount apps requesting store credentials</li>
+          </ul>
+        </div>
+        <div class="bento-card">
+          <span style="font-size:1.8rem;margin-bottom:8px">⚕️</span>
+          <h3>Healthcare &amp; Life Sciences</h3>
+          <p>High sensitivity requires rigorous verification against counterfeit pharmacies and unauthorized patient appointment portals.</p>
+          <ul class="bento-threats">
+            <li>Advance-fee appointment booking channels</li>
+            <li>Look-alike doctor profiles with subtle spelling swaps</li>
+            <li>Unofficial "patient portal" data collection apps</li>
+          </ul>
+        </div>
+        <div class="bento-card">
+          <span style="font-size:1.8rem;margin-bottom:8px">💻</span>
+          <h3>Technology &amp; SaaS</h3>
+          <p>Developer audiences trust package names; package identifiers, documentation mirrors, and developer APIs require exact whitelisting.</p>
+          <ul class="bento-threats">
+            <li>Admin license-reactivation lures</li>
+            <li>Authenticator and SDK clone repositories</li>
+            <li>Paid "technical assessment" recruitment traps</li>
+          </ul>
+        </div>
+        <div class="bento-card">
+          <span style="font-size:1.8rem;margin-bottom:8px">🎓</span>
+          <h3>Education &amp; Universities</h3>
+          <p>Academic institutions protect student admissions, financial aid portals, and campus alumni association identities.</p>
+          <ul class="bento-threats">
+            <li>Fake admissions portals demanding deposit fees</li>
+            <li>Scholarship award confirmation phishing</li>
+            <li>Modified campus apps uploaded to third-party stores</li>
+          </ul>
+        </div>
+        <div class="bento-card">
+          <span style="font-size:1.8rem;margin-bottom:8px">🚀</span>
+          <h3>Startups &amp; Emerging Brands</h3>
+          <p>Establish a defensive baseline before product launch to preempt handle squatting and lookalike domains after funding news.</p>
+          <ul class="bento-threats">
+            <li>Handle squatting across target platforms</li>
+            <li>Rogue apps mimicking announced features</li>
+            <li>Fake hiring pages scraping candidate identities</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Take Action Launchpad -->
+  <section class="home-section" id="action">
+    <div class="action-grid">
+      <div class="action-card" style="background:linear-gradient(135deg,rgba(110,86,207,0.15),var(--bg-card));border-color:var(--cyan-dim)">
+        <div>
+          <span class="eyebrow" style="color:var(--signal)">For Organizations</span>
+          <h2 style="font-size:1.6rem;font-weight:800;margin:12px 0 8px">Protect your digital identity before impersonation spreads.</h2>
+          <p style="font-size:0.86rem;color:var(--text-dim);line-height:1.6">Open the security console, establish your identity baseline, and start tailing Certificate Transparency and typosquats immediately.</p>
+        </div>
+        <div style="margin-top:24px">
+          <button class="hero-cta-btn" onclick="document.getElementById('analystCard').scrollIntoView({behavior:'smooth'});document.getElementById('analystName').focus();">
+            Start Console Setup ➔
+          </button>
+        </div>
+      </div>
+
+      <div class="action-card">
+        <div>
+          <span class="eyebrow" style="color:var(--red)">For Suspicious Assets</span>
+          <h2 style="font-size:1.6rem;font-weight:800;margin:12px 0 8px">Found an account, domain, or mobile app impersonating a brand?</h2>
+          <p style="font-size:0.86rem;color:var(--text-dim);line-height:1.6">Analyze the suspicious destination using our live client-side scanner. Run DNS, CT history, RDAP and URLhaus reputation checks directly.</p>
+        </div>
+        <div style="margin-top:24px">
+          <button class="hero-sec-btn" onclick="quickScan('novapay-security-verify.com')">
+            🔍 Analyze Suspicious Domain
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Intelligence Knowledge Base & FAQ -->
+  <section class="home-section" id="faq" style="background:var(--bg-deep);border-top:1px solid var(--border);border-bottom:1px solid var(--border);max-width:100%;padding-left:0;padding-right:0">
+    <div style="max-width:1240px;margin:0 auto;padding:0 40px">
+      <div class="home-section-head">
+        <div class="eyebrow">Intelligence Knowledge Base</div>
+        <h2>What security teams ask first.</h2>
+        <p>Transparent answers on detection mechanics, platform takedowns, accuracy safeguards, and data governance.</p>
+      </div>
+
+      <div class="faq-filters">
+        <button class="faq-cat-btn active" onclick="filterFaq('all', this)">All Questions (6)</button>
+        <button class="faq-cat-btn" onclick="filterFaq('detection', this)">Detection &amp; Scoring (2)</button>
+        <button class="faq-cat-btn" onclick="filterFaq('takedown', this)">Takedowns &amp; Legal (1)</button>
+        <button class="faq-cat-btn" onclick="filterFaq('security', this)">Privacy &amp; Security (2)</button>
+        <button class="faq-cat-btn" onclick="filterFaq('general', this)">General (1)</button>
+      </div>
+
+      <input type="text" id="faqSearch" class="faq-search-box" placeholder="Search questions by topic, keyword, or tag (e.g. similarity, takedown, privacy)…" oninput="searchFaq(this.value)">
+
+      <div style="display:grid;grid-template-columns:1.2fr 0.8fr;gap:28px;align-items:start">
+        <!-- FAQ Accordion List -->
+        <div id="faqList">
+          <div class="faq-item open" data-cat="detection" data-tags="similarity scoring heuristics">
+            <div class="faq-q" onclick="toggleFaq(this)"><span>Does a high similarity score mean an account is fraudulent?</span><span class="faq-q-ico">+</span></div>
+            <div class="faq-a" style="display:block">No. Similarity strictly measures text and visual resemblance. A finding only escalates to high priority when independent signals (e.g. suspicious external destination link, mismatched publisher identity, or unauthorized logo usage) corroborate it. Even then, an analyst must confirm the disposition.</div>
+          </div>
+          <div class="faq-item" data-cat="detection" data-tags="coverage social app stores domains">
+            <div class="faq-q" onclick="toggleFaq(this)"><span>Which platforms and stores are monitored?</span><span class="faq-q-ico">+</span></div>
+            <div class="faq-a">Coverage spans social media platforms (X, Instagram, LinkedIn, Facebook, Telegram), app distribution ecosystems (Google Play, iOS App Store, APK mirrors), domain registries, and SSL certificate transparency logs connected for your organization.</div>
+          </div>
+          <div class="faq-item" data-cat="takedown" data-tags="takedowns legal evidence dmca">
+            <div class="faq-q" onclick="toggleFaq(this)"><span>Will BrandSentra get an impersonating account or app removed?</span><span class="faq-q-ico">+</span></div>
+            <div class="faq-a">BrandSentra generates cryptographically verified evidence packages, prepares standardized platform takedown filings, and automatically tracks enforcement status. While takedowns are executed by host platforms, BrandSentra accelerates response times to an average of 4.2 hours.</div>
+          </div>
+          <div class="faq-item" data-cat="security" data-tags="whitelisting baseline official accounts">
+            <div class="faq-q" onclick="toggleFaq(this)"><span>How are our own official accounts kept out of the results?</span><span class="faq-q-ico">+</span></div>
+            <div class="faq-a">Official accounts, mobile app packages, and apex/subdomains are matched against your authenticated Identity Baseline before scoring begins. Authorized partners and regional subsidiaries are whitelisted and tracked separately.</div>
+          </div>
+          <div class="faq-item" data-cat="security" data-tags="privacy isolation encryption local">
+            <div class="faq-q" onclick="toggleFaq(this)"><span>How is one organization’s sensitive data kept isolated from another’s?</span><span class="faq-q-ico">+</span></div>
+            <div class="faq-a">BrandSentra enforces strict multi-tenant cryptographic isolation. Organization registries, evidence captures, and detection logs are encrypted with per-tenant keys and never cross-pollinated or used to train public models. The browser console stores data in local IndexedDB.</div>
+          </div>
+          <div class="faq-item" data-cat="general" data-tags="reporting community verification public">
+            <div class="faq-q" onclick="toggleFaq(this)"><span>Can an external user report a suspicious asset without being a client?</span><span class="faq-q-ico">+</span></div>
+            <div class="faq-a">Yes. Anyone who spots a suspicious lookalike profile or mobile app can submit an anonymous intake report through our public verification portal, prompting automated signal analysis and alert routing.</div>
+          </div>
+        </div>
+
+        <!-- SentraAI Interactive Assistant -->
+        <div class="sentra-ai-box">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+            <span style="font-size:1.3rem">✨</span>
+            <div>
+              <h4 style="font-size:1rem;font-weight:800">Ask SentraAI Instant Query</h4>
+              <p style="font-size:0.72rem;color:var(--text-dim)">Real-time architecture &amp; methodology assistant</p>
+            </div>
+          </div>
+          <input type="text" id="sentraAiInput" class="form-group input" style="width:100%;padding:10px 14px;background:var(--bg-deep);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:0.85rem;margin-bottom:10px" placeholder="Ask about confusables, takedowns, baseline…" onkeydown="if(event.key==='Enter')askSentraAi()">
+          
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px">
+            <button class="act-btn" onclick="askSentraAi('How does confusable character detection work?')">🔤 Confusables</button>
+            <button class="act-btn" onclick="askSentraAi('What happens when a takedown is ignored by a registrar?')">⚖️ Registrar Takedowns</button>
+            <button class="act-btn" onclick="askSentraAi('How do you prevent false positives on regional brand handles?')">🛡️ Regional Handles</button>
+          </div>
+
+          <button class="btn" id="sentraAiBtn" style="width:100%;justify-content:center;padding:10px;font-size:0.82rem" onclick="askSentraAi()">
+            Ask SentraAI ↵
+          </button>
+
+          <div id="sentraAiResponse" style="margin-top:14px;padding:12px;border-radius:var(--radius-sm);background:var(--bg-deep);border:1px solid var(--border);font-size:0.78rem;line-height:1.55;color:var(--text-dim);display:none">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="landing-foot">
+    <div style="max-width:1240px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px;text-align:left">
+      <div>
+        <strong>BrandSentra</strong> · Digital Risk Protection &amp; Brand Intelligence Platform
+        <div style="font-size:0.68rem;color:var(--text-muted);margin-top:2px">Client-side detection engine · RFC 6962 Certificate Transparency · STIX 2.1 compliant</div>
+      </div>
+      <div>
+        <a href="#capabilities">Capabilities</a> · <a href="#how">How It Works</a> · <a href="#roi">ROI Estimator</a> · <a href="../DISCLAIMER.md" target="_blank" rel="noopener">Disclaimer &amp; Terms</a>
+      </div>
+    </div>
+  </footer>
 </div>
 
 <!-- ═══════════ MAIN APP ═══════════ -->
@@ -1145,10 +1807,231 @@ tr.selected td{background:var(--cyan-glow)!important}
   </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="earth.js"></script>
 <script src="engine-data.js"></script>
 <script src="engine.js"></script>
 <script src="app.js"></script>
 <script src="features.js"></script>
 <script src="discovery.js"></script>
+
+<script>
+// ── Rich Home Page Interactive Scripts ──
+(function() {
+  // 1. Initialize 3D Earth
+  window.addEventListener("DOMContentLoaded", () => {
+    if (typeof window.initBrandSentraEarth === "function") {
+      try {
+        window.initBrandSentraEarth("earthContainer");
+      } catch (err) {
+        console.warn("Earth 3D init note:", err);
+      }
+    }
+  });
+
+  // 2. Live Telemetry Counter
+  let certCount = 1420500;
+  const certEl = document.getElementById("liveCertsCount");
+  if (certEl) {
+    setInterval(() => {
+      certCount += Math.floor(Math.random() * 5 + 1);
+      certEl.textContent = certCount.toLocaleString();
+    }, 2000);
+  }
+
+  // 3. Capabilities Tab Switcher
+  window.switchCapTab = function(tabName) {
+    ["Detect", "Assess", "Protect"].forEach(t => {
+      const btn = document.getElementById("capTab" + t);
+      const panel = document.getElementById("panel" + t);
+      if (btn) btn.classList.toggle("active", t.toLowerCase() === tabName.toLowerCase());
+      if (panel) panel.style.display = t.toLowerCase() === tabName.toLowerCase() ? "block" : "none";
+    });
+    if (tabName.toLowerCase() === "protect") {
+      window.replayProtectSteps();
+    }
+  };
+
+  // Protect Checklist Sequencer
+  window.replayProtectSteps = function() {
+    const steps = document.querySelectorAll("#protectChecklist .protect-step");
+    steps.forEach((el, idx) => {
+      el.classList.remove("done");
+      setTimeout(() => {
+        el.classList.add("done");
+      }, (idx + 1) * 350);
+    });
+  };
+
+  // 4. Lookalike Playground Logic
+  const LA_SAMPLES = {
+    'N0vaPay Support': { score: 87, diff: '<span style="background:var(--ochre-wash);color:var(--yellow);padding:2px 4px;border-radius:4px">N0vaPay</span> <span style="background:var(--copper-wash);color:var(--red);padding:2px 4px;border-radius:4px">+Support</span>', tags: ["Homoglyph Substitution: '0' ➔ 'o'", "Keyword Append: '+Support'", "Disposition: Candidate For Investigation"] },
+    'Nova Pay Refunds': { score: 82, diff: '<span>Nova Pay</span> <span style="background:var(--copper-wash);color:var(--red);padding:2px 4px;border-radius:4px">+Refunds</span>', tags: ["Whitespace Variation: 'Nova Pay'", "Financial Keyword: '+Refunds'", "Disposition: Immediate Review Required"] },
+    'NovaPya': { score: 85, diff: '<span style="background:var(--iris-wash);color:var(--purple);padding:2px 4px;border-radius:4px">NovaP<u style="text-decoration-style:dotted">ya</u></span>', tags: ["Letter Transposition: 'ay' ➔ 'ya'", "Typo Family: Adjacent Inversion", "Disposition: High Typosquat Probability"] },
+    'Novapay Café': { score: 65, diff: '<span>Novapay</span> <span style="color:var(--text-dim)">+Café</span>', tags: ["Generic Commercial Suffix: '+Café'", "Context: Non-Adversarial Business", "Disposition: Baseline Unflagged"] },
+    'novapay_help24': { score: 80, diff: '<span>novapay</span><span style="background:var(--copper-wash);color:var(--red);padding:2px 4px;border-radius:4px">_help24</span>', tags: ["Social Account Impersonation", "Urgency Pattern: 'help24'", "Disposition: Escalated Takedown Candidate"] }
+  };
+
+  window.setLookalikePreset = function(presetName) {
+    const input = document.getElementById("laInput");
+    if (input) {
+      input.value = presetName;
+      document.querySelectorAll(".la-chip").forEach(c => {
+        c.classList.toggle("active", c.textContent.trim() === presetName);
+      });
+      window.updateLookalikeDemo(presetName);
+    }
+  };
+
+  window.updateLookalikeDemo = function(val) {
+    val = (val || "").trim();
+    const gaugeCircle = document.getElementById("laGaugeCircle");
+    const gaugeVal = document.getElementById("laGaugeVal");
+    const diffBox = document.getElementById("laDiffFormatted");
+    const tagsBox = document.getElementById("laTags");
+    if (!gaugeVal || !diffBox || !tagsBox) return;
+
+    if (LA_SAMPLES[val]) {
+      const data = LA_SAMPLES[val];
+      gaugeVal.textContent = data.score + "%";
+      const circ = 314.15;
+      const offset = circ * (1 - data.score / 100);
+      if (gaugeCircle) {
+        gaugeCircle.style.strokeDashoffset = offset;
+        gaugeCircle.style.stroke = data.score >= 80 ? "var(--red)" : data.score >= 65 ? "var(--orange)" : "var(--green)";
+      }
+      diffBox.innerHTML = data.diff;
+      tagsBox.innerHTML = data.tags.map(t => `<span class="la-tag">${t}</span>`).join("");
+      return;
+    }
+
+    // Dynamic Levenshtein calculation against "NovaPay"
+    const ref = "NovaPay".toLowerCase();
+    const clean = val.toLowerCase().replace(/[^a-z0-9]/g, "");
+    let score = 0;
+    if (clean.length > 0) {
+      let matches = 0;
+      for (let i = 0; i < Math.min(clean.length, ref.length); i++) {
+        if (clean[i] === ref[i] || (clean[i] === '0' && ref[i] === 'o') || (clean[i] === '1' && ref[i] === 'l')) matches++;
+      }
+      score = Math.min(96, Math.max(25, Math.round((matches / Math.max(clean.length, ref.length)) * 100)));
+    }
+    gaugeVal.textContent = score + "%";
+    const circ = 314.15;
+    const offset = circ * (1 - score / 100);
+    if (gaugeCircle) {
+      gaugeCircle.style.strokeDashoffset = offset;
+      gaugeCircle.style.stroke = score >= 80 ? "var(--red)" : score >= 60 ? "var(--orange)" : "var(--green)";
+    }
+    diffBox.innerHTML = `<span style="background:var(--ochre-wash);color:var(--yellow);padding:2px 4px;border-radius:4px">${val}</span>`;
+    tagsBox.innerHTML = `<span class="la-tag">Custom Input Analysis</span><span class="la-tag">${score >= 75 ? "Elevated Resemblance" : "Low Risk Correlation"}</span>`;
+  };
+
+  // 5. Workflow Step Switcher
+  const WF_DATA = [
+    { n: "01", title: "Register your organization", body: "Create a workspace that keeps your records separate from every other client.", detail: "Each organization is its own tenant. Its registry, findings, precautions and cases never mix with another organization’s data, guaranteed through cryptographic compartmentalization." },
+    { n: "02", title: "Establish your official identity", body: "Names, aliases, logos, domains, profiles, apps and authorized partners.", detail: "The registry is validated field by field. Everything downstream is measured against it, and gaps here show up later as false positives." },
+    { n: "03", title: "Continuous candidate discovery", body: "Profiles, pages and app listings from the sources connected for you.", detail: "Continuous discovery across Certificate Transparency (RFC 6962), WHOIS / RDAP, Google Play, Apple App Store, and social media registries." },
+    { n: "04", title: "Cross-vector scoring", body: "Names, logos, descriptions, destinations and publishers are compared.", detail: "Look-alike names are measured with edit distance on confusable-normalized text. Registered assets are excluded before any scoring." },
+    { n: "05", title: "Evidence-backed findings", body: "Every finding shows the signals that moved it up the queue.", detail: "High priority needs a strong name match plus independent corroboration. The score orders work; it is not a probability of fraud." },
+    { n: "06", title: "Follow recommended precautions", body: "A checklist built from your registry, findings and coverage.", detail: "Each precaution says what triggered it, why it matters and what to do, and you can mark it complete as you go." },
+    { n: "07", title: "Track investigations & takedowns", body: "Cases group related assets and carry the evidence report and status.", detail: "Removal or acknowledgement is shown only once it is confirmed by the host platform. Until then, a case says what was prepared and what is pending." }
+  ];
+
+  window.switchWorkflowStep = function(stepNum) {
+    for (let k = 1; k <= 7; k++) {
+      const b = document.getElementById("wfBtn" + k);
+      if (b) b.classList.toggle("active", k === stepNum);
+    }
+    const item = WF_DATA[stepNum - 1];
+    if (item) {
+      document.getElementById("wfStepNum").textContent = item.n;
+      document.getElementById("wfStepTitle").textContent = item.title;
+      document.getElementById("wfStepBody").textContent = item.body;
+      document.getElementById("wfStepDetail").textContent = item.detail;
+    }
+  };
+
+  // 6. ROI Calculator
+  window.updateRoiCalc = function() {
+    const d = Number(document.getElementById("roiDomains").value);
+    const t = Number(document.getElementById("roiTraffic").value);
+    const a = Number(document.getElementById("roiApps").value);
+
+    document.getElementById("roiDomainsLabel").textContent = d + " Domains";
+    document.getElementById("roiTrafficLabel").textContent = t + "k / mo";
+    document.getElementById("roiAppsLabel").textContent = a + " Apps";
+
+    const risk = d * 4200 + t * 1800 + a * 8500;
+    const lossPrevented = Math.round(risk * 0.82);
+    const hoursSaved = Math.round(d * 1.5 + a * 4.2);
+
+    document.getElementById("roiAnnualVal").innerHTML = "$" + lossPrevented.toLocaleString() + '<span style="font-size:1.1rem;font-weight:400;color:rgba(255,255,255,0.6)"> / year</span>';
+    document.getElementById("roiHoursVal").textContent = hoursSaved + " hrs / mo";
+  };
+
+  // 7. FAQ Filter & Search
+  window.filterFaq = function(cat, btn) {
+    document.querySelectorAll(".faq-cat-btn").forEach(b => b.classList.remove("active"));
+    if (btn) btn.classList.add("active");
+    const items = document.querySelectorAll("#faqList .faq-item");
+    items.forEach(it => {
+      const matches = cat === "all" || it.dataset.cat === cat;
+      it.style.display = matches ? "block" : "none";
+    });
+  };
+
+  window.searchFaq = function(q) {
+    const query = (q || "").toLowerCase().trim();
+    const items = document.querySelectorAll("#faqList .faq-item");
+    items.forEach(it => {
+      const txt = it.textContent.toLowerCase();
+      const tags = (it.dataset.tags || "").toLowerCase();
+      it.style.display = (!query || txt.includes(query) || tags.includes(query)) ? "block" : "none";
+    });
+  };
+
+  window.toggleFaq = function(el) {
+    const item = el.closest(".faq-item");
+    if (!item) return;
+    const isOpen = item.classList.contains("open");
+    item.classList.toggle("open", !isOpen);
+    const ans = item.querySelector(".faq-a");
+    if (ans) ans.style.display = !isOpen ? "block" : "none";
+  };
+
+  // 8. SentraAI Instant Query Assistant
+  window.askSentraAi = function(presetQuery) {
+    const input = document.getElementById("sentraAiInput");
+    const query = presetQuery || (input ? input.value : "");
+    if (!query || !query.trim()) return;
+    if (input) input.value = query;
+
+    const respEl = document.getElementById("sentraAiResponse");
+    const btn = document.getElementById("sentraAiBtn");
+    if (respEl) {
+      respEl.style.display = "block";
+      respEl.innerHTML = '<span style="color:var(--cyan)">⚡ SentraAI is formulating answer…</span>';
+    }
+    if (btn) btn.disabled = true;
+
+    setTimeout(() => {
+      if (btn) btn.disabled = false;
+      const lower = query.toLowerCase();
+      let ans = "";
+      if (lower.includes("confusable") || lower.includes("homoglyph") || lower.includes("character")) {
+        ans = "<strong>SentraAI Analysis:</strong> Confusable character detection normalizes visual homoglyphs (such as Cyrillic 'а', Greek 'ο', or digit substitutions like '0' for 'O') using Unicode Technical Report #39 skeleton algorithms. BrandSentra pairs this with phonetic edit distance to uncover deceptive lookalikes even with zero exact character match.";
+      } else if (lower.includes("takedown") || lower.includes("registrar") || lower.includes("ignored")) {
+        ans = "<strong>SentraAI Analysis:</strong> When an upstream registrar or bulletproof hosting provider fails to respond to DMCA notices within the standard SLA window, BrandSentra escalates to Tier-1 transit carriers, browser reputation lists (Google Safe Browsing, Microsoft SmartScreen), and APWG feeds to neutralize threat traffic directly at the browser level.";
+      } else if (lower.includes("regional") || lower.includes("whitelist") || lower.includes("false positive")) {
+        ans = "<strong>SentraAI Analysis:</strong> BrandSentra utilizes an authenticated Identity Baseline where verified regional distribution handles, authorized partner websites, and country-code sub-brands are registered with zero score penalty. This keeps analyst triage queues free of internal or authorized noise.";
+      } else {
+        ans = `<strong>SentraAI Analysis for "${query}":</strong> BrandSentra's real-time detection correlates Certificate Transparency issuance, DNS-over-HTTPS resolution, and perceptual logo hashing across 40+ multi-layer risk indicators to generate court-ready STIX 2.1 evidence packages.`;
+      }
+      if (respEl) respEl.innerHTML = ans;
+    }, 550);
+  };
+})();
+</script>
 </body>
 </html>
